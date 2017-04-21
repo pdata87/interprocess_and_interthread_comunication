@@ -4,69 +4,84 @@
 #include <sys/un.h>
 #include <zconf.h>
 #include <sys/stat.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-#define MY_SOCK_PATH "/tmp/socket/s"
+
 
 
 int main(){
     // Change to tcp ip sockets
-    int sfd, cfd,fileCheck;
-    struct sockaddr_un my_addr, peer_addr;
-    struct stat fileStat;
+    int serverSocket, addrLen,fileCheck;
+    struct sockaddr_in srv_addr,client_addr;
 
-    socklen_t peer_addr_size;
-
-    fileCheck = stat(MY_SOCK_PATH,&fileStat);
-    if(fileCheck==0){
-        remove(MY_SOCK_PATH);
-    }
+    addrLen =sizeof(client_addr);
+    srv_addr.sin_family = AF_INET;
+    srv_addr.sin_port=htons(20000);
+    srv_addr.sin_addr.s_addr=htonl(INADDR_ANY);
 
 
 
-
-
-    sfd = socket(AF_UNIX,SOCK_STREAM,0);
-    if (sfd==-1){
+    serverSocket = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+    if (serverSocket==-1){
         printf("%s\n", "Couldnt create socket");
     }
 
-    my_addr.sun_family = AF_UNIX;
-    strcpy(my_addr.sun_path, MY_SOCK_PATH);
 
-
-    if (bind(sfd,(struct sockaddr *)&my_addr,sizeof(struct sockaddr_un))==-1){
+    if (bind(serverSocket,(struct sockaddr *)&srv_addr,sizeof(struct sockaddr_in))==-1){
+        perror("Error: ");
         printf("%s\n", "Couldnt bind to");
 
     }
-    if(listen(sfd,50)== -1){\
-      // Wczesniej miałem socket RAW i program nie działał.
-        // mailto : karol.barski@tieto,com
-        //TODO: Nasłuchiwanie wielu klientów
-        printf("%s\n", "Couldnt listen to connection");
 
+    if (listen(serverSocket,50)<0){
+        puts("Failed to listen");
     }
-    else {
-        // TODO: nasłuchwianie
-        printf("%s\n", "Listning ...");
+    else{
+        puts("Waiting for clients");
 
         while(1){
-                cfd = accept(sfd,(struct sockaddr *)&peer_addr,&peer_addr_size);
 
-
-            if(cfd == -1){
-                    printf("%s\n", "Not Accepted");
-
-                }
-            else {
-
-                    printf("%s\n", "Accepted");
-                    write(cfd,"test",strlen("test"));
-
-                }
+            if(accept(serverSocket,(struct sockaddr *)&client_addr,&addrLen)<0){
+                perror("Error: ");
+                puts("Failed to accept client connection");
+            }
+            else{
+                puts("Client has been accepted");
             }
 
+        }
 
     }
+
+//    if(listen(serverSocket,50)== -1){
+//      // Wczesniej miałem socket RAW i program nie działał.
+//        // mailto : karol.barski@tieto,com
+//        //TODO: Nasłuchiwanie wielu klientów
+//        printf("%s\n", "Couldnt listen to connection");
+//
+//    }
+//    else {
+//        // TODO: nasłuchwianie
+//        printf("%s\n", "Listning ...");
+//
+//        clientSocket = accept(serverSocket,(struct sockaddr *)&peer_addr,sizeof(peer_addr));
+//
+//
+//            if(clientSocket == -1){
+//                    printf("%s\n", "Not Accepted");
+//
+//                }
+//            else {
+//
+//                    printf("%s\n", "Accepted");
+//                    write(clientSocket,"test",strlen("test"));
+//
+//                }
+//
+//
+//
+//    }
 
 
     return (0);
