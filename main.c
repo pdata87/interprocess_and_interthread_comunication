@@ -9,19 +9,20 @@
 
 
 int main(){
-
+    // Change to tcp ip sockets
     int sfd, cfd,fileCheck;
     struct sockaddr_un my_addr, peer_addr;
     struct stat fileStat;
 
     socklen_t peer_addr_size;
+
     fileCheck = stat(MY_SOCK_PATH,&fileStat);
     if(fileCheck==0){
         remove(MY_SOCK_PATH);
     }
 
 
-    // TODO : Sprawdzenie czy socket istnieje
+
 
 
     sfd = socket(AF_UNIX,SOCK_STREAM,0);
@@ -50,10 +51,13 @@ int main(){
 
         while(1){
                 cfd = accept(sfd,(struct sockaddr *)&peer_addr,&peer_addr_size);
-                if(cfd == -1){
+
+
+            if(cfd == -1){
                     printf("%s\n", "Not Accepted");
 
-                } else {
+                }
+            else {
 
                     printf("%s\n", "Accepted");
                     write(cfd,"test",strlen("test"));
@@ -63,8 +67,6 @@ int main(){
 
 
     }
-
-
 
 
     return (0);

@@ -23,7 +23,7 @@ void main() {
     conn = connect(sockfd, &server_addr, sizeof(server_addr));
     if(conn<0){
 
-
+        puts("Client can't connect");
     }else{
         puts("Client connected");
         read(sockfd,BUFFER,1024);
