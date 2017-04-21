@@ -3,16 +3,26 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <zconf.h>
+#include <sys/stat.h>
 
 #define MY_SOCK_PATH "/tmp/socket/s"
 
 
 int main(){
 
-    int sfd, cfd;
+    int sfd, cfd,fileCheck;
     struct sockaddr_un my_addr, peer_addr;
+    struct stat fileStat;
+
     socklen_t peer_addr_size;
+    fileCheck = stat(MY_SOCK_PATH,&fileStat);
+    if(fileCheck==0){
+        remove(MY_SOCK_PATH);
+    }
+
+
     // TODO : Sprawdzenie czy socket istnieje
+
 
     sfd = socket(AF_UNIX,SOCK_STREAM,0);
     if (sfd==-1){
