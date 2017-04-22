@@ -36,19 +36,13 @@ void main() {
         puts("Client can't connect");
     }
     else{
-        while(conn==0){
-            puts("Client connected");
-
-        }
-
-
-        printf("%s", BUFFER);
+        send(clientSocket,BUFFER,sizeof(BUFFER),0);
 
     }
 
 
 
 
-    perror("Error: ");
+        perror("Error: ");
         printf("%s", "Finish");
 }

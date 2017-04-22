@@ -1,4 +1,0 @@
-/home/pdata/Apps/clion-2017.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/pdata/Podyplomowka/podstawy_c/zadanie
--- Configuring done
--- Generating done
--- Build files have been written to: /home/pdata/Podyplomowka/podstawy_c/zadanie/cmake-build-debug

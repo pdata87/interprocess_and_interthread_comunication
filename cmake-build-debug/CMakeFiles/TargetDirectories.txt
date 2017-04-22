@@ -1,3 +1,0 @@
-/home/pdata/Podyplomowka/podstawy_c/zadanie/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/pdata/Podyplomowka/podstawy_c/zadanie/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/pdata/Podyplomowka/podstawy_c/zadanie/cmake-build-debug/CMakeFiles/zadanie.dir
