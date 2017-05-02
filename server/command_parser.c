@@ -8,14 +8,12 @@
 #include "command.h";
 
 
-
-
 FILE *pp;
 const char *  show_interfaces();
 const char * myFunction();
 void parse_client_input(char * c){
     // TODO : Add commands parsing
-    
+
     int fo = strchr(c,'<');
     int lo = strchr(c,'>');
 
