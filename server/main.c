@@ -6,19 +6,22 @@
 #include <sys/stat.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <stdlib.h>
+#include "command_parser.h"
 
 void handleClient(int c_socket){
     char buffer[1024];
+    int i = 0;
     int dataRecived = -1;
-    if(recv(c_socket,buffer,sizeof(buffer),0)<0){
-        puts("Failed to receive DATA from client");
-    }
-    while(dataRecived >0){
+    if((dataRecived=recv(c_socket,buffer,sizeof(buffer),0))<0){
 
-        puts(buffer);
+        perror("Failed to receive DATA from client: ");
     }
-
+    parse_client_input(buffer);
+    close(c_socket);
 }
+
+
 
 
 int main(){
@@ -53,8 +56,8 @@ int main(){
         puts("Waiting for clients");
 
         while(1){
-
-            if(clientSocket = accept(serverSocket,(struct sockaddr *)&client_addr,&addrLen)<0){
+            clientSocket = accept(serverSocket,(struct sockaddr *)&client_addr,&addrLen);
+            if(clientSocket < 0){
                 perror("Error: ");
                 puts("Failed to accept client connection");
             }

@@ -1,3 +1,4 @@
-.idea/
-cmake-build-debug/*
-CMakeLists.txt
+client/cmake-build-debug/
+cmake-build-debug/
+client/.idea/*
+untitled

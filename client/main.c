@@ -14,9 +14,9 @@ void main() {
     int clientSocket, portno, n,conn;
 
     struct sockaddr_in server_addr;
-    char BUFFER[1024];
+    char BUFFER[1024] = "<status><if>eth0</if><if>wlan0</if></status>";
 
-
+    
     clientSocket = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
     server_addr.sin_family=AF_INET;
     server_addr.sin_port=htons(20000);
@@ -36,6 +36,7 @@ void main() {
         puts("Client can't connect");
     }
     else{
+
         send(clientSocket,BUFFER,sizeof(BUFFER),0);
 
     }
