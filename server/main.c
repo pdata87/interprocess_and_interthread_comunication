@@ -17,7 +17,7 @@ void handleClient(int c_socket){
 
         perror("Failed to receive DATA from client: ");
     }
-    parse_client_input(buffer);
+    process_client_input(buffer);
     close(c_socket);
 }
 

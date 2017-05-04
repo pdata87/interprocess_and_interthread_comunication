@@ -9,12 +9,12 @@
 
 
 #define MY_SOCK_PATH "127.0.0.1"
-extern int errno;
+
 void main() {
     int clientSocket, portno, n,conn;
 
     struct sockaddr_in server_addr;
-    char BUFFER[1024] = "<status><if>eth0</if><if>wlan0</if></status>";
+    char BUFFER[1024] = "<root><status><if>eth0</if><if>wlan0</if></status><list/><if_address/><if_ip/></root>";
 
     
     clientSocket = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);

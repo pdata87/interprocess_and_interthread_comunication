@@ -18,11 +18,9 @@ command* init_command(char * command_text){
 }
 
 void push_command_argument(command * cmd,char * element){
-
-
-        command_argument * new_argument = malloc(sizeof(command_argument));
-        new_argument->next = NULL;
-        strcpy(new_argument->command_argument_value,element);
+       command_argument * new_argument = malloc(sizeof(command_argument));
+       new_argument->next = NULL;
+       strcpy(new_argument->command_argument_value,element);
 
     if(cmd->command_arguments == NULL){
         // pierwszy element listy

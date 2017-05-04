@@ -7,4 +7,4 @@
 
 #endif //ZADANIE_COMMAND_PARSER_H
 
-void parse_client_input(char buffer[1024]);
+void process_client_input(char buffer[1024]);
