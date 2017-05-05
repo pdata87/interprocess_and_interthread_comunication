@@ -14,7 +14,7 @@ void main() {
     int clientSocket, portno, n,conn;
 
     struct sockaddr_in server_addr;
-    char BUFFER[1024] = "<root><status><if>eth0</if><if>wlan0</if></status><list/><if_address/><if_ip/></root>";
+    char BUFFER[1024] = "<commands><status><if>eth0</if><if>wlan0</if></status><list/><if_address/><if_ip/></commands>";
 
     
     clientSocket = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
@@ -40,6 +40,8 @@ void main() {
         send(clientSocket,BUFFER,sizeof(BUFFER),0);
 
     }
+
+
 
 
 
