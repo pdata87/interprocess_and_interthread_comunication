@@ -2,6 +2,7 @@
 #if number of argumens eq 1
 if [ $# -gt 0 ]; then
     case "$1" in
+        #status returns if interfaces are up / down
         status )
             if [ $# -gt 1 ]; then
                 echo "Status of selected interface(s)"

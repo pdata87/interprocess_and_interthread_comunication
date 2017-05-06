@@ -85,7 +85,7 @@ void validate_command(command *  cmd){
 void set_system_command(char * command_type){}
 
 
-void prepare_commands(command* cmd){
+void execute_commands_on_server(command *cmd){
     command * current_command = cmd->next;
     char * script_text = malloc(sizeof(char) * 200);
     while(current_command->next !=NULL){
@@ -93,14 +93,14 @@ void prepare_commands(command* cmd){
         if(strstr(current_command->command_text,"status")){
             script_text = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh status";
 
+            command_argument * tmp_a = current_command->command_arguments;
+            for(int i=0;i<current_command->command_arguments_counter;i++){
 
-            if(current_command->command_arguments_counter >0){
-               concat(script_text,current_command->command_arguments->command_argument_value);
-                puts("Bellow string will be executed");
-                puts(script_text);
+                script_text =concat_with_space(script_text,tmp_a->command_argument_value);
 
+                tmp_a=tmp_a->next;
             }
-
+            puts(script_text);
         }
 
         if(strstr(current_command->command_text,"list")){
@@ -141,11 +141,12 @@ const char  *  execute_bash_script(char *system_command){
 
 }
 
-char* concat(const char *s1, const char *s2)
+char* concat_with_space(const char *s1, const char *s2)
 {
     char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator
     //in real code you would check for errors in malloc here
     strcpy(result, s1);
+    strcat(result, " ");
     strcat(result, s2);
     return result;
 }

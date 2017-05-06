@@ -52,7 +52,7 @@ void input_to_xml(const char * client_input, int size) {
 
         if(result > 0){
             printf("%d commands send by client",result);
-            prepare_commands(commands_list);
+            execute_commands_on_server(commands_list);
         }
     }
 
