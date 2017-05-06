@@ -97,8 +97,7 @@ void execute_commands_on_server(command *cmd){
             for(int i=0;i<current_command->command_arguments_counter;i++){
 
                 script_text =concat_with_space(script_text,tmp_a->command_argument_value);
-
-                tmp_a=tmp_a->next;
+                tmp_a=tmp_a->next; // go to next attribute (example : <if>wlan0</if>
             }
             puts(script_text);
         }
@@ -108,7 +107,9 @@ void execute_commands_on_server(command *cmd){
             puts(current_command->command_text);
             execute_bash_script("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh list");
         }
-
+        // TODO : add other commands
+        // TODO : execute commands on server side like       execute_bash_script("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh list");
+        // TODO : return result of script's execution to client
 
 
         current_command = current_command->next;
