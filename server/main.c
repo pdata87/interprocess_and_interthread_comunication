@@ -11,8 +11,7 @@
 #include <sys/ioctl.h>
 #include "command_parser.h"
 #include <errno.h>
-#include <sys/stat.h>
-#include <sys/types.h>
+
 
 #define TRUE             1
 #define FALSE            0
@@ -24,8 +23,7 @@ int  handle_client_data(int client_fd) {
     data_size = recv(client_fd, buffer, sizeof(buffer), 0);
 
     switch(data_size){
-        default:
-            parse_client_input(buffer);
+
         case -1 :
             perror("Failed to receive DATA from client: ");
             break;
@@ -33,6 +31,8 @@ int  handle_client_data(int client_fd) {
             printf(" Connection closed by client\n");
             close(client_fd);
             break;
+        default:
+            parse_client_input(buffer);
 
     }
 

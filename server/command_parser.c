@@ -10,7 +10,8 @@
 #include "command.h"
 
 
-FILE *pp;
+
+
 char * output;
 
 
@@ -20,112 +21,106 @@ const char  *  execute_system_command(char * system_command);
 
 void parse_client_input(char *input){
     output = malloc(1024);
-    parse_to_xml(input,1024);
+    input_to_xml(input, 1024);
 
     // todo : adding system commands to structure
 
-    char * command = "ifconfig -a | sed 's/[ \\t].*//;/^$/d' | tr -d ':'";
-    puts(execute_system_command(command));
 
-   // command * com = init_command("");
-   // validate_command(com);
 
-    puts(output);
 
-   // print_command_arguments(com->command_arguments);
 
 }
-void parse_to_xml(const char * command,int size){
-    // TODO: Chosing command to execute after parsing XML command send by client
+void input_to_xml(const char * client_input, int size) {
+    // TODO: Chosing client_input to execute after parsing XML client_input send by client
 
     xmlDocPtr doc;
-    doc = xmlReadMemory(command,size,"in-memory-xml",NULL,0);
+    doc = xmlReadMemory(client_input, size, "in-memory-xml", NULL, 0);
 
-    if(doc == NULL){
-        // XML cannot be properly parsed;
-        output = "Error while parsing client input, make sure your command is in proper xml format with root node";
-    }
-    else{
+    if (doc == NULL) {
+        // XML cannot be properly parsed
 
-        xmlNode * root = doc->children;
-        xmlNode * current_command = root->children;
-        xmlNode * current_command_element;
-        while(current_command !=NULL){
+        output = "Error while parsing client input, make sure your client_input is in proper xml format with root node";
+    } else {
+        // XML has been parsed;
 
-                puts(current_command->name);
-                current_command_element = current_command->children;
-                while(current_command_element != NULL){
-                        switch (current_command_element->type){
-                            case XML_ELEMENT_NODE:
+        command * commands_list = NULL;
 
-                                printf(current_command_element->name);
-                                current_command_element = current_command_element->children;
-                                break;
-                            case XML_TEXT_NODE:
+        commands_list = calloc(1,sizeof(command));
+        commands_list->next = NULL;
 
-                                printf("\t %s \n",current_command_element->content);
+        int result = get_commands_list(commands_list,doc);
 
-                                current_command_element = current_command_element->parent->next;
-
-                                break;
-                            default:
-
-                                break;
-                        }
-
-
-                }
-
-            current_command = current_command->next;
+        if(result > 0){
+            printf("%d commands send by client",result);
+            //prepare_commands();
         }
     }
 
-
 }
 
+int get_commands_list(command * commands_list,xmlDoc *xml_document){
+    int commands_counter = 0;
+
+    xmlNode * root = xml_document->children;
+    xmlNode * current_command = root->children;
+    xmlNode * current_command_element;
+
+    while(current_command !=NULL){
+        commands_counter++;
+        // initialize new command structure
+        command * tmp_command=NULL;
+        tmp_command = push_new_command(commands_list, current_command->name);
+        current_command_element = current_command->children;
+
+        while(current_command_element != NULL){
+            switch (current_command_element->type){
+                case XML_ELEMENT_NODE:
+
+                    printf(current_command_element->name);
+                    current_command_element = current_command_element->children;
+                    break;
+                case XML_TEXT_NODE:
+
+                    printf("\t %s \n",current_command_element->content);
+                    push_command_argument(tmp_command,current_command_element);
+                    current_command_element = current_command_element->parent->next;
+
+                    break;
+                default:
+
+                    break;
+            }
 
 
-
-const char  *  show_interfaces_list(){
-    pp = popen("ifconfig -a | sed 's/[ \\t].*//;/^$/d' | tr -d ':'", "r");
-    char *BUFF = malloc(sizeof(char)*1024);
-    if (pp != NULL) {
-
-        while (1) {
-            char *line;
-            char buf[1000];
-            line = fgets(buf, sizeof buf, pp);
-            if (line == NULL) break;
-            strcat(BUFF,line);
         }
-        pclose(pp);
+
+        current_command = current_command->next;
     }
-
-    return BUFF;
-
-
-
-
+    return commands_counter;
 }
 
- const char  *  execute_system_command(char * system_command){
 
-    pp = popen(system_command, "r");
-    char *buff_ptr, buff[1024] = "";
-    buff_ptr = buff;
-    if (pp != NULL) {
+//const char  *  show_interfaces_list(){
+//    pp = popen("ifconfig -a | sed 's/[ \\t].*//;/^$/d' | tr -d ':'", "r");
+//    char *BUFF = malloc(sizeof(char)*1024);
+//    if (pp != NULL) {
+//
+//        while (1) {
+//            char *line;
+//            char buf[1000];
+//            line = fgets(buf, sizeof buf, pp);
+//            if (line == NULL) break;
+//            strcat(BUFF,line);
+//        }
+//        pclose(pp);
+//    }
+//
+//    return BUFF;
+//
+//
+//
+//
+//}
 
-        while (1) {
-            char *line;
-            char buf[1000];
-            line = fgets(buf, sizeof buf, pp);
-            if (line == NULL) break;
-            strcat(buff_ptr,line);
-        }
-        pclose(pp);
-    }
-     printf("a points at this memory location: %p", buff_ptr);
-    return buff_ptr;
 
-}
 
