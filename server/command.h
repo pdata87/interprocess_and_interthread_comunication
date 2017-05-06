@@ -28,4 +28,5 @@ void print_command_arguments(command_argument * com_a);
 void  validate_command(command *  cmd);
 int get_commands_list(command * command_list,xmlDoc *xml_document);
 void prepare_commands(command* cmd);
-const char  *  execute_system_command(char * system_command);
+const char  *  execute_bash_script(char *system_command);
+char* concat(const char *s1, const char *s2);

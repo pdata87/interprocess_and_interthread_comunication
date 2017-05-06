@@ -16,7 +16,7 @@ char * output;
 
 
 const char *  show_interfaces();
-const char  *  execute_system_command(char * system_command);
+const char  *  execute_bash_script(char *system_command);
 
 
 void parse_client_input(char *input){
@@ -52,7 +52,7 @@ void input_to_xml(const char * client_input, int size) {
 
         if(result > 0){
             printf("%d commands send by client",result);
-            //prepare_commands();
+            prepare_commands(commands_list);
         }
     }
 
@@ -99,28 +99,6 @@ int get_commands_list(command * commands_list,xmlDoc *xml_document){
     return commands_counter;
 }
 
-
-//const char  *  show_interfaces_list(){
-//    pp = popen("ifconfig -a | sed 's/[ \\t].*//;/^$/d' | tr -d ':'", "r");
-//    char *BUFF = malloc(sizeof(char)*1024);
-//    if (pp != NULL) {
-//
-//        while (1) {
-//            char *line;
-//            char buf[1000];
-//            line = fgets(buf, sizeof buf, pp);
-//            if (line == NULL) break;
-//            strcat(BUFF,line);
-//        }
-//        pclose(pp);
-//    }
-//
-//    return BUFF;
-//
-//
-//
-//
-//}
 
 
 

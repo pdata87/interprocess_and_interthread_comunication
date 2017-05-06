@@ -24,7 +24,7 @@ command * push_new_command(command * command_list, char *command_text){
 
 
 
-    new_command->next = malloc(sizeof(command));
+    new_command->next = calloc(1,sizeof(command));
     strcpy(new_command->next->command_text,command_text);
     new_command->next->command_arguments_counter =0;
     new_command->next->command_arguments = NULL;
@@ -86,29 +86,32 @@ void set_system_command(char * command_type){}
 
 
 void prepare_commands(command* cmd){
-    command * current_command = cmd;
-    while(cmd->next !=NULL){
+    command * current_command = cmd->next;
+    char * script_text = malloc(sizeof(char) * 200);
+    while(current_command->next !=NULL){
 
-        if(current_command->command_text=="status"){
+        if(strstr(current_command->command_text,"status")){
+            script_text = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh status";
+
 
             if(current_command->command_arguments_counter >0){
-
-
+               concat(script_text,current_command->command_arguments->command_argument_value);
+                puts("Bellow string will be executed");
+                puts(script_text);
 
             }
-            else{
 
-                execute_system_command()
-            }
         }
 
-        if(current_command->command_text=="list"){
-            execute_system_command(get_interfaces);
+        if(strstr(current_command->command_text,"list")){
+            puts("Executing \n");
+            puts(current_command->command_text);
+            execute_bash_script("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh list");
         }
 
 
 
-        current_command = cmd->next;
+        current_command = current_command->next;
     }
 
 
@@ -117,7 +120,7 @@ void prepare_commands(command* cmd){
 }
 
 
-const char  *  execute_system_command(char * system_command){
+const char  *  execute_bash_script(char *system_command){
     FILE *pp;
     pp = popen(system_command, "r");
     char *buff_ptr, buff[1024] = "";
@@ -136,4 +139,13 @@ const char  *  execute_system_command(char * system_command){
 
     return buff_ptr;
 
+}
+
+char* concat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator
+    //in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
 }
