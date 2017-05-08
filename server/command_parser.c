@@ -39,6 +39,7 @@ int parse_client_input(char *input){
 
 
 }
+// TODO: rm this function and move its code to parse_client_input function
 int input_to_xml(const char * client_input, int size) {
     // TODO: Chosing client_input to execute after parsing XML client_input send by client
 

@@ -17,6 +17,8 @@
 #define FALSE            0
 
 typedef struct response{
+    int bytes_recv_from_client;
+    int parsed_commands;
     int response_status;
     char response_text[1024];
 } response;
@@ -27,9 +29,9 @@ response *  handle_client_data(int client_fd) {
     response * server_response= calloc(1,sizeof(response));
     server_response->response_status = -1;
     char buffer[1024] ="";
-    server_response->response_status = recv(client_fd, buffer, sizeof(buffer), 0);
+    server_response->bytes_recv_from_client = recv(client_fd, buffer, sizeof(buffer), 0);
 
-    switch(server_response->response_status){
+    switch( server_response->bytes_recv_from_client){
 
         case -1 :
             perror("Failed to receive DATA from client: ");
@@ -39,8 +41,8 @@ response *  handle_client_data(int client_fd) {
             close(client_fd);
             break;
         default:
-
-            int no_of_commands = parse_client_input(buffer);
+            // number of properly (in case of any ) parsed commands
+            server_response->parsed_commands = parse_client_input(buffer);
 
             // return response if parsing failed
             //printf("%d commands send by client",result);
