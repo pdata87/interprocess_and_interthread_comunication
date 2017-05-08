@@ -41,11 +41,14 @@ response *  handle_client_data(int client_fd) {
             close(client_fd);
             break;
         default:
+            // if client send data, try parse
             // number of properly (in case of any ) parsed commands
             server_response->no_of_parsed_commands = parse_client_input(buffer,1024);
+            if(server_response->no_of_parsed_commands >0){
+                strcpy(server_response->response_text,"test");
+                send(client_fd, server_response->response_text, 20, 0);
+            }
 
-            // return  if parsing failed
-            //printf("%d commands send by client",result);
     }
 
     return server_response;
