@@ -25,26 +25,13 @@ char * get_parser_output(){
 
     return output;
 }
-int parse_client_input(char *input){
+int parse_client_input(char *input, int size){
+
     int parsing_status = -1;
-    output = malloc(1024);
-
-    parsing_status = input_to_xml(input, 1024);
-
-    return  parsing_status;
-    // todo : adding system commands to structure
-
-
-
-
-
-}
-// TODO: rm this function and move its code to parse_client_input function
-int input_to_xml(const char * client_input, int size) {
-    // TODO: Chosing client_input to execute after parsing XML client_input send by client
-
+    output = malloc(size);
     xmlDocPtr doc;
-    doc = xmlReadMemory(client_input, size, "in-memory-xml", NULL, 0);
+
+    doc = xmlReadMemory(input, size, "in-memory-xml", NULL, 0);
 
     if (doc == NULL) {
         // XML cannot be properly parsed
@@ -70,7 +57,15 @@ int input_to_xml(const char * client_input, int size) {
 
     }
 
+
+    // todo : adding system commands to structure
+
+
+
+
+
 }
+
 
 int get_commands_list(command * commands_list,xmlDoc *xml_document){
     int commands_counter = 0;

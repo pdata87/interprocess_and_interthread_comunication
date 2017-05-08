@@ -18,7 +18,7 @@
 
 typedef struct response{
     int bytes_recv_from_client;
-    int parsed_commands;
+    int no_of_parsed_commands;
     int response_status;
     char response_text[1024];
 } response;
@@ -42,9 +42,9 @@ response *  handle_client_data(int client_fd) {
             break;
         default:
             // number of properly (in case of any ) parsed commands
-            server_response->parsed_commands = parse_client_input(buffer);
+            server_response->no_of_parsed_commands = parse_client_input(buffer,1024);
 
-            // return response if parsing failed
+            // return  if parsing failed
             //printf("%d commands send by client",result);
     }
 
