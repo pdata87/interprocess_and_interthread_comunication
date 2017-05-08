@@ -96,7 +96,7 @@ void execute_commands_on_server(command *cmd){
     while(current_command !=NULL){
 
 
-        // TODO : Program shouldnt have hardcoded
+        // TODO : Program shouldnt have hardcoded commands
         if(strstr(current_command->command_text,"status")){
             script_text = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh status";
 
@@ -115,11 +115,8 @@ void execute_commands_on_server(command *cmd){
             puts(current_command->command_text);
             execute_bash_script("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh list");
         }
-        // TODO : add other commands
-        // TODO : execute commands on server side like       execute_bash_script("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh list");
-        // TODO : return result of script's execution to client
 
-
+        // TODO : return message to client
         current_command = current_command->next;
     }
 

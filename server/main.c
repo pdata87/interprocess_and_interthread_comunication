@@ -21,17 +21,17 @@ typedef struct response{
     int no_of_parsed_commands;
     int response_status;
     char response_text[1024];
-} response;
+} request;
 
 
 // this function parses data sent by client
-response *  handle_client_data(int client_fd) {
-    response * server_response= calloc(1,sizeof(response));
-    server_response->response_status = -1;
+request *  handle_client_data(int client_fd) {
+    request * client_request= calloc(1,sizeof(request));
+    client_request->response_status = -1;
     char buffer[1024] ="";
-    server_response->bytes_recv_from_client = recv(client_fd, buffer, sizeof(buffer), 0);
+    client_request->bytes_recv_from_client = recv(client_fd, buffer, sizeof(buffer), 0);
 
-    switch( server_response->bytes_recv_from_client){
+    switch( client_request->bytes_recv_from_client){
 
         case -1 :
             perror("Failed to receive DATA from client: ");
@@ -43,15 +43,16 @@ response *  handle_client_data(int client_fd) {
         default:
             // if client send data, try parse
             // number of properly (in case of any ) parsed commands
-            server_response->no_of_parsed_commands = parse_client_input(buffer,1024);
-            if(server_response->no_of_parsed_commands >0){
-                strcpy(server_response->response_text,"test");
-                send(client_fd, server_response->response_text, 20, 0);
+            client_request->no_of_parsed_commands = parse_client_input(buffer,1024);
+            if(client_request->no_of_parsed_commands >0){
+                //TODO: Get properly parsed commands list, execute and return result to client.
+                //command * cmd_list = get_command_list();
+                send(client_fd, client_request->response_text, 20, 0);
             }
 
     }
 
-    return server_response;
+    return client_request;
 }
 
 int main() {
@@ -181,7 +182,7 @@ int main() {
 
                         while(TRUE){
                             // Handle  client data
-                            response * server_response= calloc(1, sizeof(response));
+                            request * server_response= calloc(1, sizeof(request));
                             server_response = handle_client_data(poll_fds[i].fd);
 
                             if (return_value < 0) {
@@ -195,8 +196,8 @@ int main() {
 
                             printf("Bytes send by client : %d",return_value);
                             
-                            // TODO function which return output to client
 
+                            //TODO: remove line bellow after tests
                             return_value = send(poll_fds[i].fd, "Server response here", 20, 0);
                             if (return_value < 0) {
                                 perror("  send() failed");

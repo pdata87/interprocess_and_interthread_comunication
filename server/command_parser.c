@@ -19,16 +19,16 @@
 const char *  show_interfaces();
 const char  *  execute_bash_script(char *system_command);
 
-char * output;
+command * commands_list;
 
-char * get_parser_output(){
-
-    return output;
+command * get_command_list(){
+    return commands_list;
 }
+
 int parse_client_input(char *input, int size){
 
     int parsing_status = -1;
-    output = malloc(size);
+
     xmlDocPtr doc;
 
     doc = xmlReadMemory(input, size, "in-memory-xml", NULL, 0);
@@ -38,9 +38,9 @@ int parse_client_input(char *input, int size){
         return XML_PARSING_ERROR; // -1
 
     } else {
-        // XML has been parsed;
 
-        command * commands_list = NULL;
+
+
 
         commands_list = calloc(1,sizeof(command));
         commands_list->next = NULL;
@@ -56,13 +56,6 @@ int parse_client_input(char *input, int size){
         return result;
 
     }
-
-
-    // todo : adding system commands to structure
-
-
-
-
 
 }
 
