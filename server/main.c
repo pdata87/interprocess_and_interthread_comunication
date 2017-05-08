@@ -16,13 +16,20 @@
 #define TRUE             1
 #define FALSE            0
 
-// this function parses data sent by client
-int  handle_client_data(int client_fd) {
-    char buffer[1024] ="";
-    int data_size = -1;
-    data_size = recv(client_fd, buffer, sizeof(buffer), 0);
+typedef struct response{
+    int response_status;
+    char response_text[1024];
+} response;
 
-    switch(data_size){
+
+// this function parses data sent by client
+response *  handle_client_data(int client_fd) {
+    response * server_response= calloc(1,sizeof(response));
+    server_response->response_status = -1;
+    char buffer[1024] ="";
+    server_response->response_status = recv(client_fd, buffer, sizeof(buffer), 0);
+
+    switch(server_response->response_status){
 
         case -1 :
             perror("Failed to receive DATA from client: ");
@@ -32,11 +39,14 @@ int  handle_client_data(int client_fd) {
             close(client_fd);
             break;
         default:
-            parse_client_input(buffer);
 
+            int no_of_commands = parse_client_input(buffer);
+
+            // return response if parsing failed
+            //printf("%d commands send by client",result);
     }
 
-    return data_size;
+    return server_response;
 }
 
 int main() {
@@ -166,7 +176,8 @@ int main() {
 
                         while(TRUE){
                             // Handle  client data
-                            return_value = handle_client_data(poll_fds[i].fd);
+                            response * server_response= calloc(1, sizeof(response));
+                            server_response = handle_client_data(poll_fds[i].fd);
 
                             if (return_value < 0) {
                                 if (errno != EWOULDBLOCK) {
@@ -180,7 +191,7 @@ int main() {
                             printf("Bytes send by client : %d",return_value);
                             
                             // TODO function which return output to client
-                            // send some data to client
+
                             return_value = send(poll_fds[i].fd, "Server response here", 20, 0);
                             if (return_value < 0) {
                                 perror("  send() failed");

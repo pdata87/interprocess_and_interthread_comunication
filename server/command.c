@@ -8,11 +8,16 @@
 #include <libxml2/libxml/tree.h>
 #include "command.h"
 #define  COMMAND_COUNTER 4
+
+
+
 char * aviable_commands[] = { "list", "status", "addr_ip","addr_hw"};
 
 char * get_interfaces = "ls /sys/class/net/";
 char * get_ip = "ifconfig ens33 | grep 'inet'";
 char * get_status = "cat /sys/class/net/eth0/operstate";
+
+int clientFd;
 
 command * push_new_command(command * command_list, char *command_text){
 
@@ -88,21 +93,24 @@ void set_system_command(char * command_type){}
 void execute_commands_on_server(command *cmd){
     command * current_command = cmd->next;
     char * script_text = malloc(sizeof(char) * 200);
-    while(current_command->next !=NULL){
+    while(current_command !=NULL){
 
+
+        // TODO : Program shouldnt have hardcoded
         if(strstr(current_command->command_text,"status")){
             script_text = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh status";
 
             command_argument * tmp_a = current_command->command_arguments;
             for(int i=0;i<current_command->command_arguments_counter;i++){
 
-                script_text =concat_with_space(script_text,tmp_a->command_argument_value);
+                script_text = concat_with_space(script_text,tmp_a->command_argument_value);
                 tmp_a=tmp_a->next; // go to next attribute (example : <if>wlan0</if>
             }
-            puts(script_text);
+            puts(execute_bash_script(script_text));
         }
 
         if(strstr(current_command->command_text,"list")){
+            script_text = concat_with_space(script_text,current_command->command_text);
             puts("Executing \n");
             puts(current_command->command_text);
             execute_bash_script("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh list");

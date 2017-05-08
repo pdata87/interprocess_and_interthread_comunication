@@ -9,20 +9,29 @@
 #include <libxml2/libxml/parser.h>
 #include "command.h"
 
+#define XML_PARSING_ERROR             -1
 
 
 
-char * output;
+
 
 
 const char *  show_interfaces();
 const char  *  execute_bash_script(char *system_command);
 
+char * output;
 
-void parse_client_input(char *input){
+char * get_parser_output(){
+
+    return output;
+}
+int parse_client_input(char *input){
+    int parsing_status = -1;
     output = malloc(1024);
-    input_to_xml(input, 1024);
 
+    parsing_status = input_to_xml(input, 1024);
+
+    return  parsing_status;
     // todo : adding system commands to structure
 
 
@@ -30,7 +39,7 @@ void parse_client_input(char *input){
 
 
 }
-void input_to_xml(const char * client_input, int size) {
+int input_to_xml(const char * client_input, int size) {
     // TODO: Chosing client_input to execute after parsing XML client_input send by client
 
     xmlDocPtr doc;
@@ -38,8 +47,8 @@ void input_to_xml(const char * client_input, int size) {
 
     if (doc == NULL) {
         // XML cannot be properly parsed
+        return XML_PARSING_ERROR; // -1
 
-        output = "Error while parsing client input, make sure your client_input is in proper xml format with root node";
     } else {
         // XML has been parsed;
 
@@ -51,9 +60,13 @@ void input_to_xml(const char * client_input, int size) {
         int result = get_commands_list(commands_list,doc);
 
         if(result > 0){
-            printf("%d commands send by client",result);
+
             execute_commands_on_server(commands_list);
+
         }
+        // if 0, input has been properly parsed but return 0 commands, else return number of proper commands
+        return result;
+
     }
 
 }

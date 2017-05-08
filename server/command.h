@@ -22,6 +22,8 @@ typedef struct command_argument{
     struct command_argument * first;
 } command_argument;
 
+
+
 command* push_new_command(command *command_list, char *command_text);
 void push_command_argument(command * cmd,xmlNode * element);
 void print_command_arguments(command_argument * com_a);
