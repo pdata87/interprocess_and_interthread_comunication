@@ -12,17 +12,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65ed6289-ec8f-4989-b656-09b9f5a96f58" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../CMakeLists.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../server/libs/libxml2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../server/libs/ls" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/client.dir/main.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/client.dir/main.c.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/client" afterPath="$PROJECT_DIR$/cmake-build-debug/client" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.c" afterPath="$PROJECT_DIR$/main.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/command.c" afterPath="$PROJECT_DIR$/../server/command.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/command_parser.c" afterPath="$PROJECT_DIR$/../server/command_parser.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/command_parser.h" afterPath="$PROJECT_DIR$/../server/command_parser.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/main.c" afterPath="$PROJECT_DIR$/../server/main.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/ChangeLog" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/ChangeLog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/APIchunk12.html" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/APIchunk12.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/api.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/api.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/devhelp/devhelp.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/devhelp/devhelp.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/devhelp/html.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/devhelp/html.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/devhelp/libxml2-xpathInternals.html" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/devhelp/libxml2-xpathInternals.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/elfgcchack.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/elfgcchack.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/examples/examples.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/examples/examples.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/html/libxml-xpathInternals.html" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/html/libxml-xpathInternals.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/libxml2-api.xml" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/libxml2-api.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/newapi.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/newapi.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/site.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/site.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/wiki.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/doc/wiki.xsl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/result/XPath/expr/strings" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/result/XPath/expr/strings" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/test/XPath/expr/strings" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/test/XPath/expr/strings" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/test/namespaces/reconcile/tests-to-c.xsl" afterPath="$PROJECT_DIR$/../server/libs/libxml2-2.7.2/test/namespaces/reconcile/tests-to-c.xsl" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,8 +59,8 @@
       <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state relative-caret-position="206">
+              <caret line="16" column="118" lean-forward="false" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="118" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -351,30 +359,36 @@
       <workItem from="1493450609682" duration="8000" />
       <workItem from="1493451380384" duration="7960000" />
       <workItem from="1493715198501" duration="14943000" />
-      <workItem from="1493893278541" duration="6657000" />
+      <workItem from="1493893278541" duration="8196000" />
+      <workItem from="1493927767873" duration="56000" />
+      <workItem from="1493927833807" duration="13000" />
+      <workItem from="1494058819684" duration="2421000" />
+      <workItem from="1494075701835" duration="1798000" />
+      <workItem from="1494097763089" duration="1219000" />
+      <workItem from="1494275783485" duration="11000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46184000" />
+    <option name="totallyTimeSpent" value="64192000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1036" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29818955" sideWeight="0.49541286" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16134185" sideWeight="0.49541286" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1633772" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1633772" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44407895" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29179978" sideWeight="0.5045872" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44407895" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32785088" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -836,8 +850,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+        <state relative-caret-position="206">
+          <caret line="16" column="118" lean-forward="false" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="118" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
