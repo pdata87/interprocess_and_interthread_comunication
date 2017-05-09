@@ -31,7 +31,7 @@ void process_request(request *req){
                 output = concat_with_new_line(output,execute_bash_script(script_text));
 
 
-            // TODO : return message to client
+
             current_command = current_command->next;
             strcpy(req->response_text,output);
         }
