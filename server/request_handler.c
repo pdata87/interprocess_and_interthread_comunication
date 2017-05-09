@@ -19,6 +19,7 @@ void process_request(request *req){
 
         while(current_command !=NULL){
 
+
                 script_text = concat_with_space(script_path,current_command->command_text);
                 command_argument * tmp_a = current_command->command_arguments;
                 for(int i=0;i<current_command->command_arguments_counter;i++){
