@@ -302,7 +302,7 @@
       <xsl:variable name="name" select="@name"/>
       <xsl:variable name="start" select="@start"/>
       <xsl:variable name="end" select="@end"/>
-      <xsl:variable name="block" select="concat($start, '-', $end)"/>
+      <xsl:variable name="block" select="concat_with_space($start, '-', $end)"/>
       <a href="API{$name}.html"><xsl:value-of select="$block"/></a>
       <xsl:text>
 </xsl:text>
@@ -313,7 +313,7 @@
     <xsl:variable name="name" select="@name"/>
     <xsl:variable name="start" select="@start"/>
     <xsl:variable name="end" select="@end"/>
-    <xsl:variable name="block" select="concat($start, '-', $end)"/>
+    <xsl:variable name="block" select="concat_with_space($start, '-', $end)"/>
     <xsl:variable name="target" select="/apirefs/index/chunk[@name = $name]"/>
     <xsl:variable name="title">API Alphabetic Index <xsl:value-of select="$block"/> for <xsl:value-of select="$module"/></xsl:variable>
     <xsl:document href="API{$name}.html" method="xml" encoding="ISO-8859-1"

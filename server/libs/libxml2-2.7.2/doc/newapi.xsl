@@ -692,7 +692,7 @@
   </xsl:template>
 
   <xsl:template name="mainpage">
-    <xsl:param name="file" select="concat($htmldir, '/index.html')"/>
+    <xsl:param name="file" select="concat_with_space($htmldir, '/index.html')"/>
     <xsl:variable name="title">Reference Manual for <xsl:value-of select="/api/@name"/></xsl:variable>
     <xsl:document href="{$file}" method="xml" encoding="ISO-8859-1"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -754,10 +754,10 @@
     <!-- Save the main index.html as well as a couple of copies -->
     <xsl:call-template name="mainpage"/>
     <xsl:call-template name="mainpage">
-      <xsl:with-param name="file" select="concat($htmldir, '/book1.html')"/>
+      <xsl:with-param name="file" select="concat_with_space($htmldir, '/book1.html')"/>
     </xsl:call-template>
     <xsl:call-template name="mainpage">
-      <xsl:with-param name="file" select="concat($htmldir, '/libxml-lib.html')"/>
+      <xsl:with-param name="file" select="concat_with_space($htmldir, '/libxml-lib.html')"/>
     </xsl:call-template>
     <!-- now build the file for each of the modules -->
     <xsl:apply-templates select="/api/files/file"/>

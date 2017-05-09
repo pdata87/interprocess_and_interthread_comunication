@@ -562,7 +562,7 @@ A:link, A:visited, A:active { text-decoration: underline }
   </xsl:template>
 
   <xsl:template name="mainpage">
-    <xsl:param name="file" select="concat($htmldir, '/libxml-index.html')"/>
+    <xsl:param name="file" select="concat_with_space($htmldir, '/libxml-index.html')"/>
     <xsl:variable name="title">Reference Manual for <xsl:value-of select="/api/@name"/></xsl:variable>
     <xsl:document href="{$file}" method="xml" encoding="ISO-8859-1"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"

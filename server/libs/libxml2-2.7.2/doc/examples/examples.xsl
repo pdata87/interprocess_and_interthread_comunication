@@ -31,28 +31,28 @@
 
   <xsl:template match="include">
     <xsl:variable name="header" select="substring-before(substring-after(., '/'), '&gt;')"/>
-    <xsl:variable name="doc" select="concat('../html/libxml-', $header, 'tml')"/>
+    <xsl:variable name="doc" select="concat_with_space('../html/libxml-', $header, 'tml')"/>
     <li><a href="{$doc}"><xsl:value-of select="."/></a></li>
   </xsl:template>
 
   <xsl:template match="typedef">
     <xsl:variable name="name" select="@name"/>
-    <xsl:variable name="header" select="concat(@file, '.h')"/>
-    <xsl:variable name="doc" select="concat('../html/libxml-', @file, '.html#', $name)"/>
+    <xsl:variable name="header" select="concat_with_space(@file, '.h')"/>
+    <xsl:variable name="doc" select="concat_with_space('../html/libxml-', @file, '.html#', $name)"/>
     <li> line <xsl:value-of select="@line"/>: Type <a href="{$doc}"><xsl:value-of select="$name"/></a> from <xsl:value-of select="$header"/></li>
   </xsl:template>
 
   <xsl:template match="function">
     <xsl:variable name="name" select="@name"/>
-    <xsl:variable name="header" select="concat(@file, '.h')"/>
-    <xsl:variable name="doc" select="concat('../html/libxml-', @file, '.html#', $name)"/>
+    <xsl:variable name="header" select="concat_with_space(@file, '.h')"/>
+    <xsl:variable name="doc" select="concat_with_space('../html/libxml-', @file, '.html#', $name)"/>
     <li> line <xsl:value-of select="@line"/>: Function <a href="{$doc}"><xsl:value-of select="$name"/></a> from <xsl:value-of select="$header"/></li>
   </xsl:template>
 
   <xsl:template match="macro">
     <xsl:variable name="name" select="@name"/>
-    <xsl:variable name="header" select="concat(@file, '.h')"/>
-    <xsl:variable name="doc" select="concat('../html/libxml-', @file, '.html#', $name)"/>
+    <xsl:variable name="header" select="concat_with_space(@file, '.h')"/>
+    <xsl:variable name="doc" select="concat_with_space('../html/libxml-', @file, '.html#', $name)"/>
     <li> line <xsl:value-of select="@line"/>: Macro <a href="{$doc}"><xsl:value-of select="$name"/></a> from <xsl:value-of select="$header"/></li>
   </xsl:template>
 

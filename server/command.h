@@ -1,6 +1,8 @@
 //
 // Created by pdata on 02.05.17.
 //
+#include <libxml2/libxml/tree.h>
+#include <libxml2/libxml/parser.h>
 
 #ifndef ZADANIE_COMMAND_H
 #define ZADANIE_COMMAND_H
@@ -14,6 +16,7 @@ typedef struct command{
     struct command* next;
     struct command* last;
 } command;
+
 typedef struct command_argument{
     char command_argument_name[20];
     char  command_argument_value[20];
@@ -29,6 +32,4 @@ void push_command_argument(command * cmd,xmlNode * element);
 void print_command_arguments(command_argument * com_a);
 void  validate_command(command *  cmd);
 int get_commands_list(command * command_list,xmlDoc *xml_document);
-void execute_commands_on_server(command *cmd);
-const char  *  execute_bash_script(char *system_command);
-char* concat_with_space(const char *s1, const char *s2);
+

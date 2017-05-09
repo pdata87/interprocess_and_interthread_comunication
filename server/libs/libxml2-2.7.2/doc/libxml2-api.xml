@@ -17146,7 +17146,7 @@ Could we use @subtypes for this?'/>
     </function>
     <function name='xmlXPathConcatFunction' file='xpathInternals' module='xpath'>
       <cond>defined(LIBXML_XPATH_ENABLED)</cond>
-      <info>Implement the concat() XPath function string concat(string, string, string*) The concat function returns the concatenation of its arguments.</info>
+      <info>Implement the concat_with_space() XPath function string concat_with_space(string, string, string*) The concat_with_space function returns the concatenation of its arguments.</info>
       <return type='void'/>
       <arg name='ctxt' type='xmlXPathParserContextPtr' info='the XPath Parser context'/>
       <arg name='nargs' type='int' info='the number of arguments'/>

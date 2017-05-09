@@ -501,7 +501,7 @@
       <html>
         <head>
 	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	  <title><xsl:value-of select="concat(@name, ': ', summary)"/></title>
+	  <title><xsl:value-of select="concat_with_space(@name, ': ', summary)"/></title>
 	  <meta name="generator" content="Libxml2 devhelp stylesheet"/>
 	  <link rel="start" href="index.html" title="libxml2 Reference Manual"/>
 	  <link rel="up" href="index.html" title="libxml2 Reference Manual"/>

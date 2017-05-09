@@ -10,18 +10,14 @@
 #include <sys/poll.h>
 #include <sys/ioctl.h>
 #include "command_parser.h"
+#include "request_handler.h"
 #include <errno.h>
+#include <netinet/tcp.h>
 
 
 #define TRUE             1
 #define FALSE            0
 
-typedef struct response{
-    int bytes_recv_from_client;
-    int no_of_parsed_commands;
-    int response_status;
-    char response_text[1024];
-} request;
 
 
 // this function parses data sent by client
@@ -44,16 +40,21 @@ request *  handle_client_data(int client_fd) {
             // if client send data, try parse
             // number of properly (in case of any ) parsed commands
             client_request->no_of_parsed_commands = parse_client_input(buffer,1024);
+
             if(client_request->no_of_parsed_commands >0){
                 //TODO: Get properly parsed commands list, execute and return result to client.
-                //command * cmd_list = get_command_list();
-                send(client_fd, client_request->response_text, 20, 0);
+                client_request->commands_list = get_parsed_commands();
+
+                process_request(client_request);
+                send(client_fd, client_request->response_text, 1024, 0);
             }
 
     }
 
     return client_request;
 }
+
+
 
 int main() {
     // Change to tcp ip sockets
@@ -72,7 +73,7 @@ int main() {
     close_conn = FALSE;
 
 
-    listeningSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    listeningSocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
 
     if (listeningSocket == -1) {
         printf("%s\n", "Couldnt create socket");
@@ -198,7 +199,7 @@ int main() {
                             
 
                             //TODO: remove line bellow after tests
-                            return_value = send(poll_fds[i].fd, "Server response here", 20, 0);
+                            //return_value = send(poll_fds[i].fd, "Server response here", 20, 0);
                             if (return_value < 0) {
                                 perror("  send() failed");
                                 // TODO Why connection was closed ?
@@ -220,7 +221,6 @@ int main() {
 
                     }
                 }
-
 
                 //TODO: Defeine when server should be terminated
             } while (1); /* End of serving running.    */

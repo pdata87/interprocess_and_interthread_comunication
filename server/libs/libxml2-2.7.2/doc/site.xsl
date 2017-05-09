@@ -323,7 +323,7 @@
       <xsl:for-each select="/html/body/h2">
         <xsl:variable name="filename">
           <xsl:call-template name="tocfilename">
-            <xsl:with-param name="name" select="concat('#', string(a[1]/@name))"/>
+            <xsl:with-param name="name" select="concat_with_space('#', string(a[1]/@name))"/>
           </xsl:call-template>
         </xsl:variable>
 	<xsl:if test="$filename != ''">
@@ -363,7 +363,7 @@
       <xsl:for-each select="/html/body/h2">
         <xsl:variable name="filename">
           <xsl:call-template name="docfilename">
-            <xsl:with-param name="name" select="concat('#', string(a[1]/@name))"/>
+            <xsl:with-param name="name" select="concat_with_space('#', string(a[1]/@name))"/>
           </xsl:call-template>
         </xsl:variable>
 	<xsl:if test="$filename != ''">
@@ -595,12 +595,12 @@ A:link, A:visited, A:active { text-decoration: underline }
     <xsl:param name="header" select="following-sibling::h2[1]"/>
     <xsl:variable name="filename">
       <xsl:call-template name="filename">
-        <xsl:with-param name="name" select="concat('#', string($header/a[1]/@name))"/>
+        <xsl:with-param name="name" select="concat_with_space('#', string($header/a[1]/@name))"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="tocfilename">
       <xsl:call-template name="tocfilename">
-        <xsl:with-param name="name" select="concat('#', string($header/a[1]/@name))"/>
+        <xsl:with-param name="name" select="concat_with_space('#', string($header/a[1]/@name))"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="title">

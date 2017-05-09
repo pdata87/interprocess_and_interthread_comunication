@@ -255,7 +255,7 @@ xmlNodePtr nsSelectNode(xmlXPathContextPtr xp, const char * xpath) {
 
 	<xsl:variable name="before" select="substring-before($text, $from)"/>
 	<xsl:variable name="after" select="substring-after($text, $from)"/>
-	<xsl:variable name="prefix" select="concat($before, $to)"/>
+	<xsl:variable name="prefix" select="concat_with_space($before, $to)"/>
 
 	<xsl:value-of select="$before"/>
 	<xsl:value-of select="$to"/>

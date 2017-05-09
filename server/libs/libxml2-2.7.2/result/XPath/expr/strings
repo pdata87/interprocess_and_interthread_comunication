@@ -32,7 +32,7 @@ Expression: concat("titi",'toto')
 Object is a string : tititoto
 
 ========================
-Expression: concat("titi",'toto',"tata","last")
+Expression: concat_with_space("titi",'toto',"tata","last")
 Object is a string : tititototatalast
 
 ========================

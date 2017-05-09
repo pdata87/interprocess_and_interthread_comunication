@@ -107,7 +107,7 @@ extern __typeof (__xmlGenericErrorContext) __xmlGenericErrorContext__internal_al
   <xsl:template match="function">
     <xsl:variable name="str" select="string(@name)"/>
     <xsl:if test="(starts-with(@name, 'xml') or starts-with(@name, 'html') or contains(@name, 'Push') or contains(@name, 'Pop')) and (not(contains(@name, 'xmlDllMain')))">
-      <xsl:variable name="alias" select="concat($str, '__internal_alias')"/>
+      <xsl:variable name="alias" select="concat_with_space($str, '__internal_alias')"/>
       <xsl:apply-templates select="cond"/>
       <xsl:text>#ifdef bottom_</xsl:text>
       <xsl:value-of select="string(@module)"/>
