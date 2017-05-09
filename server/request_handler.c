@@ -12,17 +12,14 @@ void process_request(request *req){
 
     command * current_command = req->commands_list->next;
     char * script_text = calloc(1024,sizeof(char));
-    script_text = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh";
+    const char * script_path = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh";
+
 
     char * output = calloc(1024,sizeof(char));
 
         while(current_command !=NULL){
 
-
-            // TODO : Program shouldnt have hardcoded commands
-            if(strstr(current_command->command_text,"status")){
-
-                script_text = concat_with_space(script_text,current_command->command_text);
+                script_text = concat_with_space(script_path,current_command->command_text);
                 command_argument * tmp_a = current_command->command_arguments;
                 for(int i=0;i<current_command->command_arguments_counter;i++){
                     perror("process_request_begin");
@@ -31,19 +28,13 @@ void process_request(request *req){
                     tmp_a=tmp_a->next; // go to next attribute (example : <if>wlan0</if>
                 }
                 output = concat_with_new_line(output,execute_bash_script(script_text));
-            }
 
-            if(strstr(current_command->command_text,"list")){
-                script_text = concat_with_space(script_text,current_command->command_text);
-                puts("Executing \n");
-                puts(current_command->command_text);
-                output = concat_with_new_line(output,execute_bash_script(script_text));
-            }
 
             // TODO : return message to client
             current_command = current_command->next;
+            strcpy(req->response_text,output);
         }
-    strcpy(req->response_text,output);
+
 
 
 
