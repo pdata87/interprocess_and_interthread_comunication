@@ -42,7 +42,7 @@ request *  handle_client_data(int client_fd) {
             client_request->no_of_parsed_commands = parse_client_input(buffer,1024);
 
             if(client_request->no_of_parsed_commands >0){
-                //TODO: Get properly parsed commands list, execute and return result to client.
+
                 client_request->commands_list = get_parsed_commands();
 
                 process_request(client_request);
