@@ -1,1 +1,2 @@
-# interprocess_and_interthread_comunication
+Treść zadania
+1. Zaimpelemntuj listę korzystając z dynamicznej alokacji pamięci. 2. Węzeł listy ma być zdefiniowany jako: typedef struct List { int value; stuct List* next; } 3. Zaimplementuj metody dostępu do listy: void push_back() int pop_front() • zwracana wartość to wartość pola value z węzła listy • jeżeli lista jest pusta, zwracana wartość ma wynosić -1 4. Stwórz pule N-wątków (N >= 3) z czego: 0-wątek -> dodaje (push_back) losowe dane do listy <1-N) -> wątki ściągają (pop_front) dane z listy 5. Zidetyfikuj sekcje krytyczne w programie i odpowiednio je zabezpiecz. 6. Jeżeli lista jest pusta, wówczas czytające wątki mają być uśpione.
