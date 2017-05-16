@@ -24,7 +24,8 @@ const char* concat_with_space(const char *s1, const char *s2)
 }
 const char* concat_with_new_line(const char *s1, const char *s2)
 {
-    char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator
+    int new_string_size = strlen(s1)+strlen(s2)+sizeof("\n")+1;
+    char *result = (char *)calloc(new_string_size,sizeof(char));//+1 for the zero-terminator
     //in real code you would check for errors in malloc here
     strcpy(result, s1);
     strcat(result, "\n");

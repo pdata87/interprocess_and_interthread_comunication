@@ -11,7 +11,7 @@
 void process_request(request *req){
 
     command * current_command = req->commands_list->next;
-    char * script_text = calloc(1024,sizeof(char));
+    char * script_text;
     const char * script_path = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh";
 
 
@@ -29,15 +29,15 @@ void process_request(request *req){
                     tmp_a=tmp_a->next; // go to next attribute (example : <if>wlan0</if>
                 }
                 output = concat_with_new_line(output,execute_bash_script(script_text));
-
-
+                free(script_text);
+git
 
             current_command = current_command->next;
             strcpy(req->response_text,output);
+
         }
 
-
-
+    free(output);
 
 }
 
@@ -62,11 +62,3 @@ const char  *  execute_bash_script(char *system_command){
     return buff_ptr;
 
 }
-
-//void validate_command(command *  cmd){
-//
-//    for(int i=0;i<COMMAND_COUNTER;i++){
-//        puts(aviable_commands[i]);
-//    }
-//
-//}

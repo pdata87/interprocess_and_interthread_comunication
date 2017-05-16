@@ -22,13 +22,18 @@ int parse_client_input(char *input, int size){
 
     int parsing_status = -1;
 
-    xmlDocPtr doc;
+    xmlDocPtr doc  = xmlReadMemory(input, size, "in-memory-xml", NULL, 0);
 
-    doc = xmlReadMemory(input, size, "in-memory-xml", NULL, 0);
 
     if (doc == NULL) {
         // XML cannot be properly parsed
+
+        xmlCleanupParser();
+        xmlDictCleanup();
+        xmlCleanupGlobals();
+        xmlCleanupMemory();
         return XML_PARSING_ERROR; // -1
+
 
     } else {
 
@@ -38,6 +43,13 @@ int parse_client_input(char *input, int size){
 
         int result = get_commands_list(commands_list,doc);
 
+
+        xmlCleanupParser();
+        xmlDictCleanup();
+        xmlCleanupGlobals();
+        xmlCleanupMemory();
+
+        xmlFreeDoc(doc);
 
         return result;
 
@@ -58,7 +70,7 @@ int get_commands_list(command * commands_list,xmlDoc *xml_document){
         commands_counter++;
         // initialize new command structure
         command * tmp_command=NULL;
-        tmp_command = push_new_command(commands_list, (char *)current_command->name);
+        tmp_command = push_new_command(commands_list, (char *) current_command->name);
         current_command_element = current_command->children;
 
         while(current_command_element != NULL){
@@ -82,9 +94,12 @@ int get_commands_list(command * commands_list,xmlDoc *xml_document){
 
 
         }
-
+        free(tmp_command);
         current_command = current_command->next;
     }
+
+
+
     return commands_counter;
 }
 

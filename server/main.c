@@ -31,27 +31,37 @@ request *  handle_client_data(int client_fd) {
 
         case -1 :
             perror("Failed to receive DATA from client: ");
+            client_request->response_status = -1;
+            free(client_request);
             break;
         case 0 :
             printf(" Connection closed by client\n");
+            client_request->response_status = 0;
             close(client_fd);
+            free(client_request);
             break;
         default:
             // if client send data, try parse
             // number of properly (in case of any ) parsed commands
             client_request->no_of_parsed_commands = parse_client_input(buffer,1024);
 
-            if(client_request->no_of_parsed_commands >0){
-
+            if(client_request->no_of_parsed_commands > 0){
+                client_request->response_status = client_request->no_of_parsed_commands;
                 client_request->commands_list = get_parsed_commands();
 
                 process_request(client_request);
                 send(client_fd, client_request->response_text, 1024, 0);
             }
 
-    }
+            break;
 
+    }
+    xmlCleanupParser();
+    xmlDictCleanup();
+    xmlCleanupGlobals();
+    xmlCleanupMemory();
     return client_request;
+
 }
 
 
@@ -183,10 +193,10 @@ int main() {
 
                         while(TRUE){
                             // Handle  client data
-                            request * server_response= calloc(1, sizeof(request));
-                            server_response = handle_client_data(poll_fds[i].fd);
+                            request * server_response = handle_client_data(poll_fds[i].fd);
 
-                            if (return_value < 0) {
+
+                            if (server_response->bytes_recv_from_client < 0) {
                                 if (errno != EWOULDBLOCK) {
                                     perror("  recv() failed");
                                     close_conn = TRUE;
@@ -194,18 +204,13 @@ int main() {
 
                                 break;
                             }
-
-                            printf("Bytes send by client : %d",return_value);
-                            
-
-                            //TODO: remove line bellow after tests
-                            //return_value = send(poll_fds[i].fd, "Server response here", 20, 0);
-                            if (return_value < 0) {
-                                perror("  send() failed");
-                                // TODO Why connection was closed ?
+                            if (server_response->response_status == 0) {
+                                free(server_response);
+                                puts("Client closed connection");
                                 close_conn = TRUE;
                                 break;
                             }
+                            free(server_response);
                             break;
 
                         }
@@ -224,6 +229,9 @@ int main() {
 
                 //TODO: Defeine when server should be terminated
             } while (1); /* End of serving running.    */
+
+        free(&srv_addr);
+        free(&poll_fds);
 
         return (0);
     }
