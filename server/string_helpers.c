@@ -7,11 +7,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-const char* concat_with_space(const char *s1, const char *s2)
+ char* concat_with_space( char *s1,  char *s2)
 {
 
-    int new_string_size = strlen(s1)+strlen(s2)+2;
-    char *result = malloc(new_string_size);//+1 for the zero-terminator
+    int new_string_size = strlen(s1)+strlen(s2)+strlen(" ")+1;
+    char *result =malloc(new_string_size);
 
 
     //in real code you would check for errors in malloc here
@@ -19,16 +19,16 @@ const char* concat_with_space(const char *s1, const char *s2)
 
     strcat(result, " ");
     strcat(result, s2);
+
     return result;
 
 }
-const char* concat_with_new_line(const char *s1, const char *s2)
+ char* concat_with_new_line( char *s1,  char *s2)
 {
-    int new_string_size = strlen(s1)+strlen(s2)+sizeof("\n")+1;
-    char *result = (char *)calloc(new_string_size,sizeof(char));//+1 for the zero-terminator
-    //in real code you would check for errors in malloc here
-    strcpy(result, s1);
-    strcat(result, "\n");
-    strcat(result, s2);
-    return result;
+
+    strcat(s1, "\n");
+    strcat(s1, s2);
+
+
+    return s1;
 }

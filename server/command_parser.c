@@ -7,74 +7,75 @@
 #include <malloc.h>
 
 #include "command.h"
+#include "request_handler.h"
 
 #define XML_PARSING_ERROR             -1
 
 
 
-command * commands_list;
 
-command * get_parsed_commands(){
-    return commands_list;
-}
 
-int parse_client_input(char *input, int size){
+
+
+int parse_client_request(request * request, int size){
 
     int parsing_status = -1;
 
-    xmlDocPtr doc  = xmlReadMemory(input, size, "in-memory-xml", NULL, 0);
+    xmlDocPtr doc  = xmlReadMemory(request->client_input, size, "in-memory-xml", NULL, 0);
 
 
     if (doc == NULL) {
         // XML cannot be properly parsed
 
-        xmlCleanupParser();
-        xmlDictCleanup();
-        xmlCleanupGlobals();
-        xmlCleanupMemory();
+
         return XML_PARSING_ERROR; // -1
 
 
-    } else {
+    }
+    else {
 
 
-        commands_list = calloc(1,sizeof(command));
-        commands_list->next = NULL;
-
-        int result = get_commands_list(commands_list,doc);
 
 
-        xmlCleanupParser();
-        xmlDictCleanup();
-        xmlCleanupGlobals();
-        xmlCleanupMemory();
+
+        set_commands_list(request->commands_list, doc);
+
+
+
 
         xmlFreeDoc(doc);
 
-        return result;
+
 
     }
 
 }
 
-
-int get_commands_list(command * commands_list,xmlDoc *xml_document){
+void freeList(command * head){
+    command * tmp;
+    while(head!=NULL){
+        tmp=head;
+        head = head->next;
+        free(tmp);
+    }
+}
+void  set_commands_list(command * commands_list, xmlDoc *xml_document){
 
     int commands_counter = 0;
 
     xmlNode * root = xml_document->children;
     xmlNode * current_command = root->children;
     xmlNode * current_command_element;
-
+    command  * tmp_command;
     while(current_command !=NULL){
         commands_counter++;
         // initialize new command structure
-        command * tmp_command=NULL;
-        tmp_command = push_new_command(commands_list, (char *) current_command->name);
+
+        tmp_command = push_new_command_to_list(commands_list, (char *) current_command->name);
         current_command_element = current_command->children;
 
-        while(current_command_element != NULL){
-            switch (current_command_element->type){
+        while(current_command_element != NULL) {
+            switch (current_command_element->type) {
                 case XML_ELEMENT_NODE:
 
 
@@ -82,8 +83,8 @@ int get_commands_list(command * commands_list,xmlDoc *xml_document){
                     break;
                 case XML_TEXT_NODE:
 
-                    printf("\t %s \n",current_command_element->content);
-                    push_command_argument(tmp_command,current_command_element);
+                    printf("\t %s \n", current_command_element->content);
+                    push_command_argument(tmp_command, current_command_element);
                     current_command_element = current_command_element->parent->next;
 
                     break;
@@ -92,15 +93,16 @@ int get_commands_list(command * commands_list,xmlDoc *xml_document){
                     break;
             }
 
-
         }
-        free(tmp_command);
+        //
         current_command = current_command->next;
+
     }
 
 
 
-    return commands_counter;
+
+
 }
 
 

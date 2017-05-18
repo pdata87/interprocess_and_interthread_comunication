@@ -10,9 +10,10 @@
 
 typedef struct request{
     int bytes_recv_from_client;
+    char  client_input[1024];
     int no_of_parsed_commands;
     int response_status;
-    char response_text[1024];
+    char * response_text;
     command * commands_list;
 } request;
 

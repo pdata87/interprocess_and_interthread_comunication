@@ -11,33 +11,40 @@
 void process_request(request *req){
 
     command * current_command = req->commands_list->next;
-    char * script_text;
+    req->response_text = calloc(1024,sizeof(char));
+
     const char * script_path = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh";
-
-
-    char * output = calloc(1024,sizeof(char));
-
+    char * script_text;
+    char * output ="";
         while(current_command !=NULL){
 
 
                 script_text = concat_with_space(script_path,current_command->command_text);
                 command_argument * tmp_a = current_command->command_arguments;
                 for(int i=0;i<current_command->command_arguments_counter;i++){
-                    perror("process_request_begin");
+
                     script_text = concat_with_space(script_text,tmp_a->command_argument_value);
-                    perror("process_request_end");
+
                     tmp_a=tmp_a->next; // go to next attribute (example : <if>wlan0</if>
                 }
-                output = concat_with_new_line(output,execute_bash_script(script_text));
-                free(script_text);
-git
+                output = execute_bash_script(script_text);
+                strcpy(req->response_text,concat_with_new_line(req->response_text,output))   ;
+
+
+
 
             current_command = current_command->next;
-            strcpy(req->response_text,output);
+            free(script_text);
+
+
+
 
         }
 
-    free(output);
+
+
+
+
 
 }
 

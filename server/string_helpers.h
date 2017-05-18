@@ -7,4 +7,4 @@
 
 #endif //ZADANIE_STRING_HELPERS_H
 const char* concat_with_space(const char *s1, const char *s2);
-const char* concat_with_new_line(const char *s1, const char *s2);
+char* concat_with_new_line( char *s1,  char *s2);

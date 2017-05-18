@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <sys/poll.h>
 #include <sys/ioctl.h>
+
 #include "command_parser.h"
-#include "request_handler.h"
+
 #include <errno.h>
 #include <netinet/tcp.h>
 
@@ -23,39 +24,49 @@
 // this function parses data sent by client
 request *  handle_client_data(int client_fd) {
     request * client_request= calloc(1,sizeof(request));
+    client_request->commands_list = calloc(1,sizeof(command));
     client_request->response_status = -1;
-    char buffer[1024] ="";
-    client_request->bytes_recv_from_client = recv(client_fd, buffer, sizeof(buffer), 0);
+
+    client_request->bytes_recv_from_client = recv(client_fd, client_request->client_input, sizeof(client_request->client_input), 0);
 
     switch( client_request->bytes_recv_from_client){
 
         case -1 :
             perror("Failed to receive DATA from client: ");
+
             client_request->response_status = -1;
-            free(client_request);
+
             break;
+
         case 0 :
             printf(" Connection closed by client\n");
             client_request->response_status = 0;
-            close(client_fd);
-            free(client_request);
-            break;
+
+            break ;
+
+
+
         default:
             // if client send data, try parse
             // number of properly (in case of any ) parsed commands
-            client_request->no_of_parsed_commands = parse_client_input(buffer,1024);
+            client_request->no_of_parsed_commands = parse_client_request(client_request, strlen(client_request->client_input));
 
             if(client_request->no_of_parsed_commands > 0){
                 client_request->response_status = client_request->no_of_parsed_commands;
-                client_request->commands_list = get_parsed_commands();
+
 
                 process_request(client_request);
-                send(client_fd, client_request->response_text, 1024, 0);
+                int dataSend = send(client_fd, client_request->response_text, 1024, 0);
+                if (dataSend >0){
+
+                }
             }
 
             break;
 
     }
+
+
     xmlCleanupParser();
     xmlDictCleanup();
     xmlCleanupGlobals();
@@ -193,35 +204,25 @@ int main() {
 
                         while(TRUE){
                             // Handle  client data
-                            request * server_response = handle_client_data(poll_fds[i].fd);
+                            request*  req = handle_client_data(poll_fds[i].fd);
 
-
-                            if (server_response->bytes_recv_from_client < 0) {
-                                if (errno != EWOULDBLOCK) {
-                                    perror("  recv() failed");
-                                    close_conn = TRUE;
-                                }
-
+                            if(req->bytes_recv_from_client == 0 || req->bytes_recv_from_client<0){
+                                freeList(req->commands_list);
+                                free(req);
+                                close(poll_fds[i].fd);
+                                poll_fds[i].fd = -1;
                                 break;
                             }
-                            if (server_response->response_status == 0) {
-                                free(server_response);
-                                puts("Client closed connection");
-                                close_conn = TRUE;
-                                break;
-                            }
-                            free(server_response);
-                            break;
+
+                            freeList(req->commands_list);
+                            free(req->response_text);
+                            free(req);
 
                         }
 
 
                         //TODO: Handle closing connection
-                        if (close_conn) {
-                            close(poll_fds[i].fd);
-                            poll_fds[i].fd = -1;
 
-                        }
 
 
                     }

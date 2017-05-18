@@ -14,15 +14,14 @@
 char * aviable_commands[] = { "list", "status", "addr_ip","addr_hw"};
 
 
-command * push_new_command(command * command_list, char *command_text){
+command * push_new_command_to_list(command * command_list, char *command_text){
 
-    command * new_command = command_list;
+
+    command * new_command  = command_list;
 
     while(new_command->next!=NULL){
         new_command = new_command->next;
     }
-
-
 
     new_command->next = calloc(1,sizeof(command));
     strcpy(new_command->next->command_text,command_text);
@@ -31,7 +30,7 @@ command * push_new_command(command * command_list, char *command_text){
     new_command->next->next = NULL;
     new_command->last=new_command;
 
-    return new_command->next;
+    return new_command;
 
 
 

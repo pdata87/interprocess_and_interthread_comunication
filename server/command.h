@@ -13,6 +13,7 @@ typedef struct command{
     char result[1024];
     int command_arguments_counter;
     struct command_argument* command_arguments; //wskaźnik na listę skladowych polecenia np : if dla xml o strukturze <status><if>eth0</if></status>, dla tego przypadku structura będzie przechowywała listę interfejsów podanych przez clienta
+    struct command* first;
     struct command* next;
     struct command* last;
 } command;
@@ -27,9 +28,8 @@ typedef struct command_argument{
 
 
 
-command* push_new_command(command *command_list, char *command_text);
+command * push_new_command_to_list(command * command_list, char *command_text);
 void push_command_argument(command * cmd,xmlNode * element);
 void print_command_arguments(command_argument * com_a);
 void  validate_command(command *  cmd);
-int get_commands_list(command * command_list,xmlDoc *xml_document);
-
+void  set_commands_list(command * commands_list, xmlDoc *xml_document);
