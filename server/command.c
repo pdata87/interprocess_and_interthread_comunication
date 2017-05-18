@@ -30,12 +30,11 @@ command * push_new_command_to_list(command * command_list, char *command_text){
     new_command->next->next = NULL;
     new_command->last=new_command;
 
-    return new_command;
+    return new_command->next;
 
 
 
 }
-
 void push_command_argument(command * cmd,xmlNode * element){
     command_argument * new_argument = calloc(1,sizeof(command_argument));
     new_argument->next = NULL;

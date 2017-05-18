@@ -11,15 +11,17 @@
 void process_request(request *req){
 
     command * current_command = req->commands_list->next;
-    req->response_text = calloc(1024,sizeof(char));
 
-    const char * script_path = "/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh";
-    char * script_text;
-    char * output ="";
+    char * script_text = calloc(1024,sizeof(char));
+
+
+    char * output;
+
         while(current_command !=NULL){
 
+                script_text = concat_with_space(script_text,"/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh");
 
-                script_text = concat_with_space(script_path,current_command->command_text);
+                script_text = concat_with_space(script_text,current_command->command_text);
                 command_argument * tmp_a = current_command->command_arguments;
                 for(int i=0;i<current_command->command_arguments_counter;i++){
 
@@ -28,18 +30,20 @@ void process_request(request *req){
                     tmp_a=tmp_a->next; // go to next attribute (example : <if>wlan0</if>
                 }
                 output = execute_bash_script(script_text);
+                memset(script_text,0,1024);
                 strcpy(req->response_text,concat_with_new_line(req->response_text,output))   ;
 
 
 
 
             current_command = current_command->next;
-            free(script_text);
+
 
 
 
 
         }
+        free(script_text);
 
 
 
@@ -49,7 +53,7 @@ void process_request(request *req){
 }
 
 
-const char  *  execute_bash_script(char *system_command){
+const char  *  execute_bash_script(char * system_command){
     FILE *pp;
     pp = popen(system_command, "r");
     char *buff_ptr, buff[1024] = "";

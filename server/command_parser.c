@@ -53,8 +53,19 @@ int parse_client_request(request * request, int size){
 
 void freeList(command * head){
     command * tmp;
+
     while(head!=NULL){
         tmp=head;
+        if(tmp->command_arguments>0){
+            command_argument * cmd_arg = tmp->command_arguments;
+            command_argument *tmp_arg;
+            while(cmd_arg!=NULL){
+                tmp_arg=cmd_arg;
+                cmd_arg = cmd_arg->next;
+                free(tmp_arg);
+            }
+        }
+
         head = head->next;
         free(tmp);
     }
