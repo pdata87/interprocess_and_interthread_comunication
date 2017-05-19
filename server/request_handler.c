@@ -4,9 +4,11 @@
 
 #include <stdio.h>
 #include <memory.h>
-#include "command.h"
-#include "request_handler.h"
+
+
 #include "string_helpers.h"
+
+#include "request_handler.h"
 
 void process_request(request *req, char *script_path) {
 
@@ -76,7 +78,6 @@ void free_client_request(request *client_request){
     free(client_request->response_text);
     free(client_request);
 }
-
 void free_commands_list(command *head){
     command * tmp;
 

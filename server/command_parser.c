@@ -5,42 +5,38 @@
 #include <memory.h>
 #include <stdio.h>
 #include <malloc.h>
-
-#include "command.h"
 #include "request_handler.h"
 
-#define XML_PARSING_ERROR             -1
 
 
+#include <libxml2/libxml/tree.h>
 
 
-
-
-
-int parse_client_request(request * request, int size){
+int parse_xml(request *client_request, int size){
 
     int parsing_status = -1;
 
-    xmlDocPtr doc  = xmlReadMemory(request->client_input, size, "in-memory-xml", NULL, 0);
+    xmlDocPtr doc  = xmlReadMemory(client_request->client_input, size, "in-memory-xml", NULL, 0);
 
 
     if (doc == NULL) {
         // XML cannot be properly parsed
 
-       // request->response_text="test";
-        return XML_PARSING_ERROR; // -1
+        strcpy(client_request->response_text,"XML cannot be properly parsed, make sure you are sending properly formed xml document with root node ex: <xml><list/><status><if>lo</if></status></xml> \n");
+        return -1 ; // -1
 
 
     }
     else {
-        set_commands_list(request->commands_list, doc);
+        client_request->no_of_parsed_commands = set_commands_list(client_request->commands_list, doc);
         xmlFreeDoc(doc);
+        return client_request->no_of_parsed_commands;
     }
 
 }
 
-
-void  set_commands_list(command * commands_list, xmlDoc *xml_document){
+// this function converts xml document into command structure
+int set_commands_list(command *commands_list, xmlDoc *xml_document){
 
     int commands_counter = 0;
 
@@ -79,6 +75,7 @@ void  set_commands_list(command * commands_list, xmlDoc *xml_document){
         current_command = current_command->next;
 
     }
+    return commands_counter;
 
 
 
@@ -87,5 +84,53 @@ void  set_commands_list(command * commands_list, xmlDoc *xml_document){
 }
 
 
+command * push_new_command_to_list(command * command_list, char *command_text){
+
+
+    command * new_command  = command_list;
+
+    while(new_command->next!=NULL){
+        new_command = new_command->next;
+    }
+
+    new_command->next = calloc(1,sizeof(command));
+    strcpy(new_command->next->command_text,command_text);
+    new_command->next->command_arguments_counter =0;
+    new_command->next->command_arguments = NULL;
+    new_command->next->next = NULL;
+
+    return new_command->next;
+
+
+
+}
+// This function add new command arguments  into curent  command arguments list structure
+void push_command_argument(command * cmd,xmlNode * element){
+
+    command_argument * new_argument = calloc(1,sizeof(command_argument));
+    new_argument->next = NULL;
+    cmd->command_arguments_counter++;
+    strcpy(new_argument->command_argument_value,element->content);
+    strcpy(new_argument->command_argument_name,element->parent->name);
+
+    if(cmd->command_arguments == NULL){
+        // First element in list
+        cmd->command_arguments = new_argument;
+        cmd->command_arguments->first= new_argument;
+        cmd->command_arguments->last = new_argument;
+    }
+    else{
+        // check if first element equals to last. If not last element becomes current
+        if(cmd->command_arguments->first == cmd->command_arguments->last){
+            cmd->command_arguments->next = new_argument;
+            cmd->command_arguments->last = new_argument;
+        }else {
+            cmd->command_arguments->last->next=new_argument;
+            cmd->command_arguments->last = new_argument;
+        }
+
+    }
+
+}
 
 

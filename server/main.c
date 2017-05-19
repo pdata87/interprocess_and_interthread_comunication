@@ -10,14 +10,12 @@
 #include <sys/poll.h>
 #include <sys/ioctl.h>
 
-#include "command_parser.h"
+#include "request_handler.h"
 #include "configuration.h"
 #include <errno.h>
 
 
 
-#define TRUE             1
-#define FALSE            0
 
 
 
@@ -36,13 +34,13 @@ request *  handle_client_request(int client_fd) {
             perror("Failed to receive DATA from client: ");
 
             client_request->response_status = -1;
-
+            strcpy(client_request->response_text,"");
             break;
 
         case 0 :
             printf(" Connection closed by client\n");
             client_request->response_status = 0;
-
+            strcpy(client_request->response_text,"Client closed connection");
             break ;
 
 
@@ -50,24 +48,23 @@ request *  handle_client_request(int client_fd) {
         default:
             // if client send data, try parse
             // number of properly (in case of any ) parsed commands
-            client_request->no_of_parsed_commands = parse_client_request(client_request, strlen(client_request->client_input));
+            client_request->no_of_parsed_commands = parse_xml(client_request, strlen(client_request->client_input));
 
             if(client_request->no_of_parsed_commands > 0){
                 client_request->response_status = client_request->no_of_parsed_commands;
-
-
                 process_request(client_request, get_config_option("bash_script_path"));
-                int dataSend = send(client_fd, client_request->response_text, 1024, 0);
-                if (dataSend >0){
 
-                }
             }
+
+
 
             break;
 
     }
+    // send response to client
+    send(client_fd, client_request->response_text, 1024, 0);
 
-
+    // clean xml lib structures;
     xmlCleanupParser();
     xmlDictCleanup();
     xmlCleanupGlobals();
@@ -90,7 +87,7 @@ int main() {
     int close_conn;
     memset(&srv_addr,0,sizeof(srv_addr));
 
-    close_conn = FALSE;
+    close_conn = 0;
 
 
     init_configuration("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/config");
@@ -209,7 +206,7 @@ int main() {
                     // Work only for connected CLIENTS
                     else {
 
-                        while(TRUE){
+                        while(1){
                             // Handle  client request
                             request*  req = handle_client_request(poll_fds[i].fd);
 

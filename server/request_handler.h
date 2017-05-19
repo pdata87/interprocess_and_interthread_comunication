@@ -2,9 +2,11 @@
 // Created by pdata on 09.05.17.
 //
 
-#ifndef ZADANIE_REQUEST_HANDLER_H
-#define ZADANIE_REQUEST_HANDLER_H
 
+
+
+#include "command_parser.h"
+#ifndef ZADANIE_REQUEST_HANDLER_H
 #endif //ZADANIE_REQUEST_HANDLER_H
 
 
@@ -22,3 +24,4 @@ void process_request(request *req, char *script_path);
 const char  *  execute_bash_script(char *system_command);
 void free_commands_list(command *head);
 void free_client_request(request *client_request);
+int parse_xml(request *client_request, int size);
