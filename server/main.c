@@ -11,9 +11,9 @@
 #include <sys/ioctl.h>
 
 #include "command_parser.h"
-
+#include "configuration.h"
 #include <errno.h>
-#include <netinet/tcp.h>
+
 
 
 #define TRUE             1
@@ -22,7 +22,7 @@
 
 
 // this function parses data sent by client
-request *  handle_client_data(int client_fd) {
+request *  handle_client_request(int client_fd) {
 
     request * client_request= calloc(1,sizeof(request));
     client_request->commands_list = calloc(1,sizeof(command));
@@ -56,7 +56,7 @@ request *  handle_client_data(int client_fd) {
                 client_request->response_status = client_request->no_of_parsed_commands;
 
 
-                process_request(client_request);
+                process_request(client_request, get_config_option("bash_script_path"));
                 int dataSend = send(client_fd, client_request->response_text, 1024, 0);
                 if (dataSend >0){
 
@@ -89,10 +89,20 @@ int main() {
     int new_client_fd = -1;
     int close_conn;
     memset(&srv_addr,0,sizeof(srv_addr));
-    srv_addr.sin_family = AF_INET;
-    srv_addr.sin_port = htons(20000);
-    srv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
     close_conn = FALSE;
+
+
+    init_configuration("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/config");
+
+
+
+    srv_addr.sin_port = htons(atoi(get_config_option("port")));
+    srv_addr.sin_family = AF_INET;
+    srv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+
+
 
 
     listeningSocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
@@ -124,7 +134,7 @@ int main() {
 
         //przypisanie pamieci pod  tablice z poll
 
-        return_value = listen(listeningSocket, 50);
+        return_value = listen(listeningSocket,  atoi(get_config_option("max_clients")));
         if (return_value < 0) {
             puts("Failed to listen");
             close(listeningSocket);
@@ -198,44 +208,29 @@ int main() {
 
                     // Work only for connected CLIENTS
                     else {
-                        printf("  Descriptor %d is readable\n", poll_fds[i].fd);
-                        // TODO close connection
-                        //close_conn = FALSE;
-
 
                         while(TRUE){
-                            // Handle  client data
-                            request*  req = handle_client_data(poll_fds[i].fd);
+                            // Handle  client request
+                            request*  req = handle_client_request(poll_fds[i].fd);
 
-                            if(req->bytes_recv_from_client == 0 || req->bytes_recv_from_client<0){
-                                freeList(req->commands_list);
-                                free(req->response_text);
-                                free(req);
+                            if(req->bytes_recv_from_client <=0 ){
+                                free_client_request(req);
                                 close(poll_fds[i].fd);
                                 poll_fds[i].fd = -1;
                                 break;
                             }
 
-                            freeList(req->commands_list);
-                            free(req->response_text);
-                            free(req);
+                            free_client_request(req);
+                            break;
 
                         }
-
-
-                        //TODO: Handle closing connection
-
-
 
                     }
                 }
 
-                //TODO: Defeine when server should be terminated
             } while (1); /* End of serving running.    */
 
-        free(&srv_addr);
-        free(&poll_fds);
-
-        return (0);
+    destroy_configuration();
+    return (0);
     }
 

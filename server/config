@@ -1,0 +1,3 @@
+port="20000";
+max_clients="40";
+bash_script_path="/home/pdata/Podyplomowka/podstawy_c/zadanie/server/get_if_data.sh";

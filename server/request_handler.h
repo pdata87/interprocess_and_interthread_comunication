@@ -18,5 +18,7 @@ typedef struct request{
 } request;
 
 
-void process_request(request *req);
+void process_request(request *req, char *script_path);
 const char  *  execute_bash_script(char *system_command);
+void free_commands_list(command *head);
+void free_client_request(request *client_request);

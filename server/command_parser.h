@@ -13,4 +13,4 @@
 
 
 int parse_client_request(request * request, int size);
-void freeList(command * head);
+void free_commands_list(command *head);

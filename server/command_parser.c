@@ -27,49 +27,19 @@ int parse_client_request(request * request, int size){
     if (doc == NULL) {
         // XML cannot be properly parsed
 
-
+       // request->response_text="test";
         return XML_PARSING_ERROR; // -1
 
 
     }
     else {
-
-
-
-
-
         set_commands_list(request->commands_list, doc);
-
-
-
-
         xmlFreeDoc(doc);
-
-
-
     }
 
 }
 
-void freeList(command * head){
-    command * tmp;
 
-    while(head!=NULL){
-        tmp=head;
-        if(tmp->command_arguments>0){
-            command_argument * cmd_arg = tmp->command_arguments;
-            command_argument *tmp_arg;
-            while(cmd_arg!=NULL){
-                tmp_arg=cmd_arg;
-                cmd_arg = cmd_arg->next;
-                free(tmp_arg);
-            }
-        }
-
-        head = head->next;
-        free(tmp);
-    }
-}
 void  set_commands_list(command * commands_list, xmlDoc *xml_document){
 
     int commands_counter = 0;
