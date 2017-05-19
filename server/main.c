@@ -72,35 +72,143 @@ request *  handle_client_request(int client_fd) {
     return client_request;
 
 }
+int listeningSocket;
+struct sockaddr_in srv_addr;
+
+int connected_clients = 1;
+int return_value, on = 1;
+int poll_size, i = 0;
+int new_client_fd = -1;
 
 
 
-int main() {
-    // Change to tcp ip sockets
-    int listeningSocket;
-    struct sockaddr_in srv_addr;
-    struct pollfd poll_fds[50];
-    int clients_fds_counter = 1;
-    int return_value, on = 1;
-    int poll_size, i = 0;
-    int new_client_fd = -1;
-    int close_conn;
+int main(int argc, char **argv) {
+
+    // config_load_failure return 1 if file is not readable, file not exist or runing application without config attribute
+    if(config_load_failure(argv[1])){
+        return -1;
+    }
+
+
+    // get some config data //
+    char * server_message  = get_config_option("welcome_message");
+    int max_clients = atoi(get_config_option("max_clients"));
+    int port = atoi(get_config_option("port"));
+    int poll_timeout =atoi(get_config_option("poll_timeout"));
+
+    struct pollfd poll_fds[max_clients];
+    server_listen(port, max_clients, poll_fds);
+
+
+    // main server loop
+    do {
+
+                printf("Waiting on events \n");
+
+
+                int poll_status = poll(poll_fds, connected_clients, poll_timeout);
+                if (poll_status < 0) {
+                    perror("Poll failed");
+                    break;
+                }
+
+
+                if (poll_status == 0) {
+                    printf("Poll timed out.  End program.\n");
+                    break;
+                }
+
+                poll_size = connected_clients;
+
+                for (i = 0; i < poll_size; i++) {
+                    if (poll_fds[i].revents == 0)
+                        continue;
+
+
+                    if (poll_fds[i].revents != POLLIN) {
+                        printf("  Error! revents = %d\n", poll_fds[i].revents);
+
+                        break;
+
+                    }
+                    // Listening file descriptor
+                    if (poll_fds[i].fd == listeningSocket) {
+                        // i == 0 - listening socket
+                        printf("  Listening socket is readable\n");
+
+                        do {
+
+                            new_client_fd = accept(listeningSocket, NULL, NULL);
+                            // if maximum connections reached
+                            if(connected_clients > max_clients){
+                                strcpy(server_message,"Maximum conections reached, closing connection");
+                                send(new_client_fd,server_message,strlen(server_message)*sizeof(char),0);
+                                close(new_client_fd);
+                                break;
+                            }
+                            else{
+                                send(new_client_fd,server_message,strlen(server_message)*sizeof(char),0);
+
+                               if (new_client_fd < 0) {
+
+                                    if (errno != EWOULDBLOCK) {
+
+                                        perror("Accept failed: ");
+
+                                    }
+                                    break;
+                                }
+
+                                // i > 1 -> connected clients, add client to pollfd structure
+                                printf("  New incoming connection - %d\n", new_client_fd);
+
+                                poll_fds[connected_clients].fd = new_client_fd;
+                                poll_fds[connected_clients].events = POLLIN;
+
+                                connected_clients++;
+                            }
+
+                        } while (new_client_fd != -1);
+
+                    }
+
+
+                    // Work only for connected CLIENTS
+                    else {
+                        while(1){
+                            // Handle  client request
+                            request*  req = handle_client_request(poll_fds[i].fd);
+
+                            if(req->bytes_recv_from_client <=0 ){
+                                free_client_request(req);
+                                close(poll_fds[i].fd);
+
+                                poll_fds[i].fd = -1;
+                                connected_clients--;
+                                break;
+                            }
+
+                            free_client_request(req);
+                            break;
+
+                        }
+
+                    }
+                }
+
+    } while (1);
+
+    destroy_configuration();
+    return (0);
+    }
+
+
+int server_listen(int port, int max_clients, struct pollfd *poll_fds) {
+
     memset(&srv_addr,0,sizeof(srv_addr));
-
-    close_conn = 0;
-
-
-    init_configuration("/home/pdata/Podyplomowka/podstawy_c/zadanie/server/config");
-
-
-
-    srv_addr.sin_port = htons(atoi(get_config_option("port")));
+    srv_addr.sin_port = htons(port);
     srv_addr.sin_family = AF_INET;
     srv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-
-
-
-
 
     listeningSocket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, IPPROTO_TCP);
 
@@ -121,113 +229,25 @@ int main() {
         close(listeningSocket);
         exit(-1);
     }
-    return_value = bind(listeningSocket, (struct sockaddr *) &srv_addr, sizeof(struct sockaddr_in));
-
-        if (return_value == -1) {
-            perror("Error: ");
-            printf("%s\n", "Couldnt bind to");
-            close(listeningSocket);
-        }
-
-        //przypisanie pamieci pod  tablice z poll
-
-        return_value = listen(listeningSocket,  atoi(get_config_option("max_clients")));
-        if (return_value < 0) {
-            puts("Failed to listen");
-            close(listeningSocket);
-            exit(-1);
-        }
-            memset(poll_fds, 0, sizeof(poll_fds));
-            puts("Waiting for clients");
-            poll_fds[0].fd = listeningSocket;
-            poll_fds[0].events = POLLIN;
-            int timeout = (3 * 60 * 1000);
-
-            do {
-
-                printf("Waiting on poll()...\n");
-
-                return_value = poll(poll_fds, clients_fds_counter, timeout);
-
-                if (return_value < 0) {
-                    perror("  poll failed");
-                    break;
-                }
 
 
-                if (return_value == 0) {
-                    printf("  poll() timed out.  End program.\n");
-                    break;
-                }
-
-                poll_size = clients_fds_counter;
-
-                for (i = 0; i < poll_size; i++) {
-                    if (poll_fds[i].revents == 0)
-                        continue;
-
-
-                    if (poll_fds[i].revents != POLLIN) {
-                        printf("  Error! revents = %d\n", poll_fds[i].revents);
-                        //TODO: end_server
-                        //end_server = TRUE;
-                        break;
-
-                    }
-                    // Listening file descriptor
-                    if (poll_fds[i].fd == listeningSocket) {
-                        // i == 0 - listening socket
-                        printf("  Listening socket is readable\n");
-
-                        do {
-
-                            new_client_fd = accept(listeningSocket, NULL, NULL);
-                            if (new_client_fd < 0) {
-                                if (errno != EWOULDBLOCK) {
-                                    perror("  accept() failed");
-                                    //TODO: endserver
-                                    //end_server = TRUE;
-                                }
-                                break;
-                            }
-
-
-                            // i > 1 -> connected clients, add client to pollfd structure
-                            printf("  New incoming connection - %d\n", new_client_fd);
-
-                            poll_fds[clients_fds_counter].fd = new_client_fd;
-                            poll_fds[clients_fds_counter].events = POLLIN;
-                            clients_fds_counter++;
-
-                        } while (new_client_fd != -1);
-                    }
-
-
-                    // Work only for connected CLIENTS
-                    else {
-
-                        while(1){
-                            // Handle  client request
-                            request*  req = handle_client_request(poll_fds[i].fd);
-
-                            if(req->bytes_recv_from_client <=0 ){
-                                free_client_request(req);
-                                close(poll_fds[i].fd);
-                                poll_fds[i].fd = -1;
-                                break;
-                            }
-
-                            free_client_request(req);
-                            break;
-
-                        }
-
-                    }
-                }
-
-            } while (1); /* End of serving running.    */
-
-    destroy_configuration();
-    return (0);
+    if (bind(listeningSocket, (struct sockaddr *) &srv_addr, sizeof(struct sockaddr_in)) == -1) {
+        perror("Error: ");
+        printf("%s\n", "Couldnt bind to");
+        close(listeningSocket);
     }
 
+
+
+
+    if (listen(listeningSocket,  max_clients) < 0) {
+        puts("Failed to listen");
+        close(listeningSocket);
+        exit(-1);
+    }
+    memset(poll_fds, 0, sizeof(poll_fds));
+        puts("Waiting for clients");
+    poll_fds[0].fd = listeningSocket;
+    poll_fds[0].events = POLLIN;
+
+}

@@ -9,6 +9,7 @@
 
 #endif //ZADANIE_CONFIGURATION_H
 
-void init_configuration(char * config_path);
+int init_configuration(char * config_path);
 char *  get_config_option(char * option_name);
 void destroy_configuration();
+int config_load_failure(char *config_path);
