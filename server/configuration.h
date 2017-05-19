@@ -1,0 +1,8 @@
+//
+// Created by pdata on 18.05.17.
+//
+
+#ifndef ZADANIE_CONFIGURATION_H
+#define ZADANIE_CONFIGURATION_H
+
+#endif //ZADANIE_CONFIGURATION_H
