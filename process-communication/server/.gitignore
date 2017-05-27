@@ -1,0 +1,4 @@
+aq.idea/
+cmake-build-debug/*
+CMakeLists.txt
+libs/*
