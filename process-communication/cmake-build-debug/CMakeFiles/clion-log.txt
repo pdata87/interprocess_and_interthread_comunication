@@ -1,0 +1,4 @@
+/home/pdata/Apps/clion-2017.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug

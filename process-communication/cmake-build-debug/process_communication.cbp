@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="process_communication"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="process_communication">
+				<Option output="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/process_communication" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 process_communication"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="process_communication/fast">
+				<Option output="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/process_communication" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/6"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
+					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 process_communication/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/SocketServer.cpp">
+			<Option target="process_communication"/>
+		</Unit>
+		<Unit filename="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/SocketServer.h">
+			<Option target="process_communication"/>
+		</Unit>
+		<Unit filename="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/main.cpp">
+			<Option target="process_communication"/>
+		</Unit>
+		<Unit filename="/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
