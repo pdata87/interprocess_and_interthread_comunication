@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/process_communication.dir/main.cpp.o CMakeFiles/process_communication.dir/SocketServer.cpp.o CMakeFiles/process_communication.dir/Client.cpp.o CMakeFiles/process_communication.dir/Message.cpp.o CMakeFiles/process_communication.dir/ConnectionPoll.cpp.o  -o process_communication 
