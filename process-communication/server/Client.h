@@ -21,7 +21,7 @@ public:
 
     Client(int fd, string identifier);
     string getClientInfo();
-    void setIPaddr(string ip_info);
+    void setIPAddress(string ip_info);
     void setIdentifier(string indentifier);
     int getFD();
 

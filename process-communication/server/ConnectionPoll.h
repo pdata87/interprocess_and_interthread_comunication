@@ -24,15 +24,15 @@ class ConnectionPoll {
 
         static ConnectionPoll & getInstance();
 
-        Client & addClient(pollfd &clientFD, string identifier = "anonymous");
+        Client & addClient(pollfd &clientPollStruct, string identifier = "anonymous");
         map<int, Client> getConnectedClients();
         const vector<pollfd> getClientsPool();
         void closeClientConnection(int clientFD);
         pollfd * getMasterFD();
         Client & getClientByFD(int fd);
     private  :
-            ConnectionPoll();
-            static ConnectionPoll & Instance;
+        ConnectionPoll();
+        static ConnectionPoll & Instance;
 
 };
 

@@ -26,18 +26,16 @@ class SocketServer {
 
         sockaddr_in sockAddr;
         sockaddr_in client_addr;
-        socklen_t remote_addr_size;
+        socklen_t remoteaAddrSize;
 
 
     // METHODS
 
         bool setupSocket(int port);
-
-
         int createSocket();
         void bindAndListen();
-        void createPoll(int masterFD);
-
+        void initPoll(int masterFD);
+        void sendConfirmation(int clientFD);
         void sendWelcomeMessage(int newClientFd);
 
 

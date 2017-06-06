@@ -13,9 +13,10 @@
 #include "Message.h"
 
 void SocketServer::handleClientMessage(string clientMessage, Client & sender, bool toAll) {
-    Message m (clientMessage,sender);
 
+    Message messageObj (clientMessage,sender);
 
+    sendConfirmation((sender.getFD()));
 
     if(toAll){
 
@@ -23,37 +24,38 @@ void SocketServer::handleClientMessage(string clientMessage, Client & sender, bo
 
             if(client.first != sender.getFD()){
 
-                string serverMessage  = m.getMessage();
+                string serverMessage  = messageObj.getMessage();
                 send(client.first,serverMessage.c_str(),serverMessage.length(),0);
             }
-
         }
-
-
     }
-
-
-
 }
 bool SocketServer::setupSocket(int port){
-    this->serverFD =  createSocket();
-    int reuse = 1;
-    setsockopt(this->serverFD,SOL_SOCKET,SO_REUSEADDR,&reuse,sizeof(int));
-    bindAndListen();
-    createPoll(this->serverFD);
 
+    try{
+        this->serverFD =  createSocket();
+        int reuse = 1;
+        setsockopt(this->serverFD,SOL_SOCKET,SO_REUSEADDR,&reuse,sizeof(int));
+        bindAndListen();
+        initPoll(this->serverFD);
+    }
+    catch  (std::string   exception){
+        cout << "Socket setup failed  : "  << exception  << endl;
+        exit(-1);
+    }
 
 
 }
 SocketServer::SocketServer(int listeningPort, int maxConn) {
 
-    remote_addr_size = sizeof client_addr;
+    remoteaAddrSize = sizeof client_addr;
     maxConnections=maxConn;
+    pollTimeOut = 60000;
     port=listeningPort;
     setupSocket(port);
 }
 SocketServer::~SocketServer() {
-    this->pollTimeOut = 60000;
+
 }
 void SocketServer::start() {
 
@@ -62,13 +64,13 @@ void SocketServer::start() {
     while(true){
         pollfd *  masterFD = ConnectionPoll::getInstance().getMasterFD();
 
-        poll(masterFD, (nfds_t) ConnectionPoll::getInstance().getClientsPool().size(), this->pollTimeOut);
+        poll(masterFD, (nfds_t) ConnectionPoll::getInstance().getClientsPool().size(), pollTimeOut);
 
 
 
         if(masterFD->revents & POLLIN){
 
-            int newClientFd = accept(masterFD->fd,(struct sockaddr *)&client_addr,&remote_addr_size);
+            int newClientFd = accept(masterFD->fd,(struct sockaddr *)&client_addr,&remoteaAddrSize);
             pollfd clientPollStructure = pollfd();
 
             clientPollStructure.fd = newClientFd;
@@ -76,8 +78,8 @@ void SocketServer::start() {
 
 
             ConnectionPoll::getInstance()
-                    .addClient(clientPollStructure).
-                    setIPaddr(inet_ntoa(client_addr.sin_addr));
+                    .addClient(clientPollStructure)
+                    .setIPAddress(inet_ntoa(client_addr.sin_addr));
 
 
             sendWelcomeMessage(newClientFd);
@@ -102,7 +104,7 @@ void SocketServer::start() {
                         }
 
                     if(recv_bytes == 0) {
-                        //TODO : Add disconnect client to clients poll.
+                        // Close connection with client and remove its data
                         ConnectionPoll::getInstance().closeClientConnection(currentClientPoll.fd);
                     }
 
@@ -121,25 +123,48 @@ int SocketServer::createSocket() {
     this->sockAddr.sin_port = htons(port);
     this->sockAddr.sin_family = AF_INET;
     this->sockAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+
     return socket(AF_INET,SOCK_STREAM,0);
 }
 void SocketServer::bindAndListen() {
-    int operationResult =     bind(this->serverFD,(struct sockaddr *)&sockAddr,sizeof(sockAddr));
+
+    int operationResult = bind(this->serverFD,(struct sockaddr *)&sockAddr,sizeof(sockAddr));
+
+
     if(operationResult < 0){
-        perror("Operation didnt succeedd");
+        std::string exception("Bind didnt succeedd check if port is free");
+        throw  exception;
+
+    }
+    operationResult = listen(this->serverFD,maxConnections);
+
+    if(operationResult != 0){
+        std::string exception("Listen didnt succeedd");
+        throw  exception;
+    }
+
+}
+void SocketServer::initPoll(int socketFD) {
+    try {
+        pollfd master;
+        master.fd= socketFD;
+        master.events=POLLIN;
+        ConnectionPoll::getInstance().addClient(master,"Master");
+    }
+    catch(exception e){
+        cout <<  e.what() << endl;
         exit(-1);
     }
-    listen(this->serverFD,maxConnections);
-}
-void SocketServer::createPoll(int socketFD) {
-    pollfd master;
-    master.fd= socketFD;
-    master.events=POLLIN;
-    ConnectionPoll::getInstance().addClient(master,"Master");
 }
 
 void SocketServer::sendWelcomeMessage(int newClientFd) {
 
     string welcomeText("Now you can write to others.\r\n If you want to please type: name=your_name to set up your identifier \r\n");
     send(newClientFd,welcomeText.c_str(),welcomeText.length(),0);
+}
+
+void SocketServer::sendConfirmation(int clientFD) {
+    string confirmation = "Message received by server \r\n";
+    send(clientFD,confirmation.c_str(),confirmation.length(),0);
+
 }

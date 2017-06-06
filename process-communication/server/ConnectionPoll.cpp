@@ -6,15 +6,24 @@
 #include <algorithm>
 #include "ConnectionPoll.h"
 
-Client & ConnectionPoll::addClient(pollfd &clientFD, string identifier) {
+Client & ConnectionPoll::addClient(pollfd &clientPollStruct, string identifier) {
 
-    this->pollFDS.push_back(clientFD);
-    Client  client(clientFD.fd,identifier);
+    try {
 
-    if(identifier!="Master") {
-        this->connectedClients.insert(make_pair(clientFD.fd,  client ));
+        Client  client(clientPollStruct.fd,identifier);
+
+        this->pollFDS.push_back(clientPollStruct);
+
+
+        if(identifier!="Master") {
+            this->connectedClients.insert(make_pair(clientPollStruct.fd,  client ));
+        }
+        return  getClientByFD(clientPollStruct.fd);
     }
-    return getClientByFD(clientFD.fd);
+    catch(const std::exception ex ){
+            throw ex;
+        }
+
 
 }
 const vector<pollfd> ConnectionPoll::getClientsPool() {

@@ -21,7 +21,7 @@ string Client::getClientInfo() {
     return output;
 }
 
-void Client::setIPaddr(string ip_info) {
+void Client::setIPAddress(string ip_info) {
 
     ip_addr=ip_info;
 }

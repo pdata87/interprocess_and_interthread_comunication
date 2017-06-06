@@ -18,6 +18,7 @@ class Message {
 
 
     time_t receiveTime;
+    time_t sendTime;
     string messageBody;
     Client sender;
 

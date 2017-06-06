@@ -24,7 +24,7 @@ Message::Message(string messageText, Client & sender) :  sender(sender) {
         string name  =messageText.substr(index,messageText.size());
         sender.setIdentifier(name);
         this->messageBody = clientInfo.append(" has changed his name to ").append(name);
-cd .
+
     }
     else {
         this->messageBody = messageText;
