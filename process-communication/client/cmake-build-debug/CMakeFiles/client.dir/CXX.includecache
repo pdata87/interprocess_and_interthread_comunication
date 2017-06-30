@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/Client.cpp
+sys/socket.h
+-
+arpa/inet.h
+-
+Client.h
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/Client.h
+
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/Client.h
+string.h
+-
+iostream
+-
+
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/main.cpp
+iostream
+-
+string.h
+-
+sys/socket.h
+-
+arpa/inet.h
+-
+Client.h
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/Client.h
+

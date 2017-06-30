@@ -1,0 +1,3 @@
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/process-communication/client/cmake-build-debug/CMakeFiles/client.dir
