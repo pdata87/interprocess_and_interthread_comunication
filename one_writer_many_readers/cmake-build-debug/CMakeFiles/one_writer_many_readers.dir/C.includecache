@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/List.c
+stdlib.h
+-
+List.h
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/List.h
+
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/List.h
+
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/main.c
+stdio.h
+-
+zconf.h
+-
+pthread.h
+-
+List.h
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/List.h
+

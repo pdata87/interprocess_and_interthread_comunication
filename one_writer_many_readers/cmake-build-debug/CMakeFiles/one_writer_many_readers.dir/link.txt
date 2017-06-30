@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/one_writer_many_readers.dir/main.c.o CMakeFiles/one_writer_many_readers.dir/List.c.o  -o one_writer_many_readers -lpthread 

@@ -1,0 +1,3 @@
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/pdata/Podyplomowka/repos/interprocess_and_interthread_comunication/one_writer_many_readers/cmake-build-debug/CMakeFiles/one_writer_many_readers.dir
